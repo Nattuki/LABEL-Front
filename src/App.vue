@@ -36,7 +36,7 @@
     <v-main>
       <v-container>
         <v-sheet min-height="20em">
-          Main Contents
+          <label-component />
         </v-sheet>
       </v-container>
 
@@ -45,8 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-
 import { ref } from 'vue'
+import LabelComponent from './components/LabelComponent.vue'
 
 const drawer = ref(false)
 </script>
