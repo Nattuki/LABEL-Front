@@ -14,11 +14,15 @@
       </v-app-bar-title>
 
       <template v-slot:append>
+        <v-btn to="/mypage">
+          MyPage
+        </v-btn>
+
         <v-btn>
           Sign-In
         </v-btn>
 
-        <v-btn>
+        <v-btn to="/">
           <v-icon>
             mdi-home
           </v-icon>
@@ -36,7 +40,7 @@
     <v-main>
       <v-container>
         <v-sheet min-height="20em">
-          <label-component />
+          <router-view />
         </v-sheet>
       </v-container>
 
@@ -46,7 +50,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import LabelComponent from './components/LabelComponent.vue'
 
 const drawer = ref(false)
 </script>
