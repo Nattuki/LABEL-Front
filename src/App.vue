@@ -32,8 +32,8 @@
 
     <v-navigation-drawer v-model="drawer">
       <v-list nav>
-        <v-list-item prepend-icon="mdi-view-dashboard" title="Home" value="home"></v-list-item>
-        <v-list-item prepend-icon="mdi-forum" title="About" value="about"></v-list-item>
+        <v-list-item prepend-icon="mdi-view-dashboard" title="HOME" value="home" to="/"></v-list-item>
+        <v-list-item prepend-icon="mdi-account" title="MYPAGE" value="mypage" to="/mypage"></v-list-item>
       </v-list>
     </v-navigation-drawer>
 

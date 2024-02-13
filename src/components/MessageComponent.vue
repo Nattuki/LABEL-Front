@@ -6,7 +6,7 @@
       title="平家物語"
       subtitle="作者不詳"
       variant="outlined"
-      color="green"
+      color="black"
       prepend-icon="mdi-book-open-variant"
     >
         <v-card-text>
@@ -19,11 +19,14 @@
         <v-card-actions>
             <v-btn :variant="'outlined'">源氏を選択</v-btn>
             <v-btn :variant="'outlined'">平家を選択</v-btn>
+            <user-icon-button/>
         </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script lang="ts" setup>
+import UserIconButton from './UserIconButton.vue'
+
 
 </script>
