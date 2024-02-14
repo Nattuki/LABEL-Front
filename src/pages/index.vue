@@ -1,7 +1,9 @@
 <template>
-  <label-component />
+  <message-component/>
 </template>
 
 <script lang="ts" setup>
-import LabelComponent from '../components/LabelComponent.vue'
+import MessageComponent from '../components/MessageComponent.vue'
+
+
 </script>

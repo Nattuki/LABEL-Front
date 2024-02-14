@@ -19,14 +19,23 @@
         <v-card-actions>
             <v-btn :variant="'outlined'">源氏を選択</v-btn>
             <v-btn :variant="'outlined'">平家を選択</v-btn>
-            <user-icon-button/>
+            <template v-for="labelId in labelIds" :key="labelId">
+              <label-component :label-id="labelId" />
+            </template>
         </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import UserIconButton from './UserIconButton.vue'
+import LabelComponent from './LabelComponent.vue'
+import useGetLabelIds from '../composables/useGetLabelIds'
+import type { MessageId } from '../types/entity-ids'
 
+const props = defineProps<{
+    messageId: MessageId
+}>()
+
+const labelIds = useGetLabelIds(props.messageId)
 
 </script>
