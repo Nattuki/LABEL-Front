@@ -1,3 +1,7 @@
-const useGetLabelIds
+import { LabelId } from "@/types/entity-ids" }
 
-export default useGetLabelIds = ()
+const useGetLabelIds = () => {
+
+}
+
+export default useGetLabelIds
