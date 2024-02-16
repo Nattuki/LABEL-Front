@@ -1,7 +1,7 @@
-import { LabelId } from "@/types/entity-ids" }
+import { LabelId } from "@/types/entity-ids"
 
 const useGetLabelIds = () => {
-
+    
 }
 
 export default useGetLabelIds

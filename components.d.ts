@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AddMessage: typeof import('./src/components/AddMessage.vue')['default']
     LabelComponent: typeof import('./src/components/LabelComponent.vue')['default']
     MessageComponent: typeof import('./src/components/MessageComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
