@@ -14,11 +14,13 @@
       </v-app-bar-title>
 
       <template v-slot:append>
+        
+
         <v-btn to="/mypage">
           MyPage
         </v-btn>
 
-        <v-btn>
+        <v-btn @click="moveToOAuth">
           Sign-In
         </v-btn>
 
@@ -52,4 +54,12 @@
 import { ref } from 'vue'
 
 const drawer = ref(false)
+
+const moveToOAuth = async () => {
+  const res = await fetch('/api/loginpath')
+  if(res.ok){
+    window.location.href = await res.text()
+  }
+}
+
 </script>
