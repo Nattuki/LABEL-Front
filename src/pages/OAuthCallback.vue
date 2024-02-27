@@ -20,10 +20,11 @@ const errorText2 = ref<string>('')
 
 onMounted(async () => {
     const code = route.query.code
+    const state = route.query.state
     if(typeof code !== 'string'){
         errorText1.value = '正しくないクエリ'
     }
-    const res = await fetch(`/api/gettoken?${code}`)
+    const res = await fetch(`/api/gettoken?code=${code}&state=${state}`)
     if(res.ok){
         router.push('/')
     }
