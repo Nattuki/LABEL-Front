@@ -7,38 +7,37 @@
           @click.stop="drawer = !drawer"
         >
         </v-app-bar-nav-icon>
-      </template>
 
-      <v-app-bar-title>
+        <v-app-bar-title>
         LABEL
-      </v-app-bar-title>
-
-      <template v-slot:append>
+        </v-app-bar-title>
         
-
-
-        <button to="/mypage">
-          <img :src="MyIconImgSrc" :class="$style.myicon" />
-        </button>
-
-        <v-btn @click="moveToOAuth" v-if="isVisitor">
-          LogIn
-        </v-btn>
-        <v-btn @click="logOut" v-if="!isVisitor">
-          LogOut
-        </v-btn>
-
         <v-btn to="/">
           <v-icon>
             mdi-home
           </v-icon>
+        </v-btn>
+
+        <v-btn to="/mypage">
+          mypage
+        </v-btn>
+      </template>
+
+      <template v-slot:append>
+        <v-btn @click="moveToOAuth" v-if="isVisitor">
+          <img src="./assets/visitor-icon.png" :class="$style.myicon" />
+          LogIn
+        </v-btn>
+        <v-btn @click="logOut" v-if="!isVisitor">
+          <img :src="MyIconImgSrc" :class="$style.myicon" />
+          LogOut
         </v-btn>
       </template>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer">
       <v-list nav>
-        <v-list-item prepend-icon="mdi-view-dashboard" title="HOME" value="home" to="/"></v-list-item>
+        <v-list-item prepend-icon="mdi-home" title="HOME" value="home" to="/"></v-list-item>
         <v-list-item prepend-icon="mdi-account" title="MYPAGE" value="mypage" to="/mypage"></v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -60,11 +59,13 @@ import { ref, onMounted, computed } from 'vue'
 const drawer = ref<boolean>(false)
 const isVisitor = ref<boolean>(false)
 const myIconBase64 = ref<string>('')
+const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
 
 onMounted(async () => {
   const res = await fetch('/api/getme')
   if(res.ok){
     const myInformation = await res.json()
+    isVisitor.value = myInformation.IsVisitor
     myIconBase64.value = await myInformation.MyIconBase64
   }
 })
@@ -77,13 +78,10 @@ const moveToOAuth = async () => {
 }
 
 const logOut = async () => {
-  const res = await fetch('/api/logout')
-  if(res.ok){
-    isVisitor.value = true
-  }
+  isVisitor.value = true
 }
 
-const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
+
 
 </script>
 
@@ -92,6 +90,14 @@ const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
   height:35px;
   width:35px;
   border-radius: 50%;
+  margin-right:10px;
+}
+
+.myicon_visitor{
+  height:35px;
+  width:35px;
+  border-radius: 50%;
+  margin-right:10px;
 }
 
 </style>
