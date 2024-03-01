@@ -16,12 +16,16 @@
       <template v-slot:append>
         
 
-        <v-btn to="/mypage">
-          MyPage
-        </v-btn>
 
-        <v-btn @click="moveToOAuth">
-          Sign-In
+        <button to="/mypage">
+          <img :src="MyIconImgSrc" :class="$style.myicon" />
+        </button>
+
+        <v-btn @click="moveToOAuth" v-if="isVisitor">
+          LogIn
+        </v-btn>
+        <v-btn @click="logOut" v-if="!isVisitor">
+          LogOut
         </v-btn>
 
         <v-btn to="/">
@@ -51,9 +55,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
-const drawer = ref(false)
+const drawer = ref<boolean>(false)
+const isVisitor = ref<boolean>(false)
+const myIconBase64 = ref<string>('')
+
+onMounted(async () => {
+  const res = await fetch('/api/getme')
+  if(res.ok){
+    const myInformation = await res.json()
+    myIconBase64.value = await myInformation.MyIconBase64
+  }
+})
 
 const moveToOAuth = async () => {
   const res = await fetch('/api/loginpath')
@@ -62,4 +76,22 @@ const moveToOAuth = async () => {
   }
 }
 
+const logOut = async () => {
+  const res = await fetch('/api/logout')
+  if(res.ok){
+    isVisitor.value = true
+  }
+}
+
+const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
+
 </script>
+
+<style lang="scss" module>
+.myicon{
+  height:35px;
+  width:35px;
+  border-radius: 50%;
+}
+
+</style>
