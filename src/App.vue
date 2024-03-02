@@ -46,6 +46,7 @@
       <v-container>
         <v-sheet min-height="20em">
           <router-view />
+          {{ x }}
         </v-sheet>
       </v-container>
 
@@ -56,12 +57,14 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
 
+const x = ref<number>(0)
 const drawer = ref<boolean>(false)
 const isVisitor = ref<boolean>(false)
 const myIconBase64 = ref<string>('')
 const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
 
 onMounted(async () => {
+  x.value = 1
   const res = await fetch('/api/getme')
   if(res.ok){
     const myInformation = await res.json()
@@ -71,6 +74,7 @@ onMounted(async () => {
 })
 
 const moveToOAuth = async () => {
+  x.value = 2
   const res = await fetch('/api/loginpath')
   if(res.ok){
     window.location.href = await res.text()
@@ -78,22 +82,16 @@ const moveToOAuth = async () => {
 }
 
 const logOut = async () => {
-  isVisitor.value = true
+  const res = await fetch('/api/logout',{method:'DELETE'})
+  if(res.ok){
+    window.location.reload()
+  }
 }
-
-
 
 </script>
 
 <style lang="scss" module>
 .myicon{
-  height:35px;
-  width:35px;
-  border-radius: 50%;
-  margin-right:10px;
-}
-
-.myicon_visitor{
   height:35px;
   width:35px;
   border-radius: 50%;
