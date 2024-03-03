@@ -46,7 +46,6 @@
       <v-container>
         <v-sheet min-height="20em">
           <router-view />
-          {{ x }}
         </v-sheet>
       </v-container>
 
@@ -55,26 +54,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, computed } from 'vue'
+import { useLoginStatusStore } from './store/loginStatus';
+import { storeToRefs } from 'pinia';
 
-const x = ref<number>(0)
+const loginStatusStore = useLoginStatusStore()
+const { isVisitor, myIconBase64 } = storeToRefs(loginStatusStore)
+
 const drawer = ref<boolean>(false)
-const isVisitor = ref<boolean>(false)
-const myIconBase64 = ref<string>('')
 const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
 
-onMounted(async () => {
-  x.value = 1
-  const res = await fetch('/api/getme')
-  if(res.ok){
-    const myInformation = await res.json()
-    isVisitor.value = myInformation.IsVisitor
-    myIconBase64.value = await myInformation.MyIconBase64
-  }
-})
-
 const moveToOAuth = async () => {
-  x.value = 2
   const res = await fetch('/api/loginpath')
   if(res.ok){
     window.location.href = await res.text()
