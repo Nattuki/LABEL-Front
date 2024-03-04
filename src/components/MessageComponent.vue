@@ -2,11 +2,9 @@
   <v-container>
     <v-card
       class="w-50"
-      elevation="4"
+      elevation="10"
       title="平家物語"
       subtitle="作者不詳"
-      variant="outlined"
-      color="black"
       prepend-icon="mdi-book-open-variant"
     >
         <v-card-text>
