@@ -17,10 +17,11 @@
           v-model="urlToSend" 
           label="url"
           density="comfortable" 
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.formatted]"
           clearable
         >
         </v-text-field>
+        {{ text }}
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn 
@@ -53,6 +54,8 @@ const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
 const urlToSend = ref<string>('')
 const titleToSend = ref<string>('')
+const text = ref<string>('none')
+
 
 const toShowTheForm = () => {
   if(!isVisitor.value){
@@ -60,13 +63,27 @@ const toShowTheForm = () => {
   }
 }
 
-const sendMessage = () => {
-
+const sendMessage = async () => {
+  const data = {
+    Title: titleToSend.value,
+    Url: urlToSend.value
+  }
+  const res = await fetch('/api/message', {
+    method: 'POST',
+    headers: {
+        "Content-Type": "application/json",
+      },
+    body: JSON.stringify(data),
+  })
+  if(res.ok){
+    text.value = await res.text()
+  }
 }
 
 const rules = {
   required: (value: string) => !!value || '入力内容が必要',
-  count: (value: string) => value.length <= 10 || '文字数制限を超える',
+  count: (value: string) => value.length <= 20 || '文字数制限を超える',
+  formatted: (value: string) => new RegExp('^https://www.youtube.com/embed/.+').test(value) || '正しくないurl形式'
 }
 
 </script>
