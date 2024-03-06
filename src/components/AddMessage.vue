@@ -1,17 +1,41 @@
 <template>
   <v-card v-if="isShowed" :class="$style.form">
-    <v-card-text>
-      <v-text-field v-model="urlToSend" label="URL" density="comfortable" hide-details></v-text-field>
-    </v-card-text>
-    <v-card-actions class="justify-end">
-      <v-btn icon="mdi-send" @click="SendMessage" />
-    </v-card-actions>
+    <v-form 
+      ref="messageForm" 
+      v-model="isValid" 
+      @submit.prevent="sendMessage()">
+      <v-card-text>
+        <v-text-field 
+          v-model="titleToSend" 
+          label="title" 
+          density="comfortable"
+          :rules="[rules.required, rules.count]"
+          clearable 
+        >
+        </v-text-field>
+        <v-text-field 
+          v-model="urlToSend" 
+          label="url"
+          density="comfortable" 
+          :rules="[rules.required]"
+          clearable
+        >
+        </v-text-field>
+      </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn 
+          icon="mdi-send" 
+          type="submit"
+          :disabled="!isValid"/>
+      </v-card-actions>
+    </v-form>
   </v-card>
   <v-btn
     elevation="3"
     icon="mdi-plus"
-    @click="isShowed = !isShowed"
+    @click="toShowTheForm"
     :class="$style.addButton"
+    :disabled="isVisitor"
     color="black"
   >
   </v-btn>
@@ -19,12 +43,30 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useLoginStatusStore } from '@/store/loginStatus';
+import { storeToRefs } from 'pinia';
 
+const loginStatusStore = useLoginStatusStore()
+const { isVisitor } = storeToRefs(loginStatusStore)
+
+const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
 const urlToSend = ref<string>('')
+const titleToSend = ref<string>('')
 
-const SendMessage = () => {
-  
+const toShowTheForm = () => {
+  if(!isVisitor.value){
+    isShowed.value = !isShowed.value
+  }
+}
+
+const sendMessage = () => {
+
+}
+
+const rules = {
+  required: (value: string) => !!value || '入力内容が必要',
+  count: (value: string) => value.length <= 10 || '文字数制限を超える',
 }
 
 </script>
@@ -40,7 +82,7 @@ const SendMessage = () => {
 .form{
   position: fixed;
   left: 50%;
-  bottom:65px;
+  bottom:30px;
   transform: translateX(-50%)
              translateY(-50%);
   width:50vw;
