@@ -1,26 +1,46 @@
 <template>
-  <v-container>
-    <v-card
-      class="w-50"
-      elevation="10"
-      title="平家物語"
-      subtitle="作者不詳"
-      prepend-icon="mdi-book-open-variant"
-    >
-        <v-card-text>
-            祇園精舎の鐘の声、諸行無常の響きあり。
-            娑羅双樹の花の色、盛者必衰の理をあらわす。
-            おごれる人も久しからず、唯、春の夜の夢のごとし。
-            猛きものもついにはほろびぬ、
-            偏に風の前の塵に同じ。
-        </v-card-text>
-        <v-card-actions>
-            <v-btn :variant="'outlined'">源氏を選択</v-btn>
-            <v-btn :variant="'outlined'">平家を選択</v-btn>
+  <v-card>
+    <v-card-title>
+      こっそりした転調
+    </v-card-title>
+    <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
 
-        </v-card-actions>
-    </v-card>
-  </v-container>
+    <v-container>
+      <v-row class="text-center">
+        <v-col>
+        <iframe 
+          ref="embed" 
+          src="https://www.youtube.com/embed/rH0FDv_qhsI"
+          width="350" 
+          height="200" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="clipboard-write; encrypted-media">
+        </iframe>
+      </v-col>
+      <v-col>
+        sedw
+      </v-col>
+      </v-row>
+    </v-container>
+        <v-slide-group
+          show-arrows
+        >
+          <v-slide-group-item
+            v-for="n in 10"
+            :key="n"
+          >
+            <v-card
+              class="mx-3 mb-4"
+              color="grey-lighten-1"
+              height="100"
+              width="150"
+            >
+            </v-card>
+          </v-slide-group-item>
+        </v-slide-group>
+
+  </v-card>
 </template>
 
 <script lang="ts" setup>
@@ -29,5 +49,14 @@ import useGetLabelIds from '../composables/useGetLabelIds'
 import type { MessageId } from '../types/entity-ids'
 
 
-
 </script>
+
+<style lang="scss" module>
+.icon{
+  height:35px;
+  width:35px;
+  border-radius: 50%;
+  margin-right:10px;
+}
+
+</style>
