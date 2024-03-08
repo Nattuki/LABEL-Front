@@ -30,7 +30,7 @@
           LogIn
         </v-btn>
         <v-btn @click="logOut" v-else>
-          <user-icon :IconImgSrc="MyIconImgSrc" />
+          <user-icon :IconBase64="myIconBase64" />
           LogOut
         </v-btn>
       </template>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useLoginStatusStore } from './store/loginStatus';
 import { storeToRefs } from 'pinia';
 import UserIcon from '@/components/UserIcon.vue'
@@ -64,7 +64,6 @@ const loginStatusStore = useLoginStatusStore()
 const { isVisitor, myIconBase64 } = storeToRefs(loginStatusStore)
 
 const drawer = ref<boolean>(false)
-const MyIconImgSrc = computed(() => "data:image/png;base64,"+myIconBase64.value)
 
 const moveToOAuth = async () => {
   const res = await fetch('/api/loginpath')

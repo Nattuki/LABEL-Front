@@ -1,16 +1,17 @@
 <template>
-  <v-card class="my-12" elevation="10">
-    <v-row>
-      <v-col cols="6">
-        <v-card-title class="font-weight-bold">
-          <v-icon size="small">mdi-home</v-icon>
-          こっそりした転調
-        </v-card-title>
-      </v-col>
-      <v-col cols="6" class="text-end pt-5">
-        <message-options />
-      </v-col>
-    </v-row>
+  <v-card 
+    class="my-12" 
+    elevation="10" 
+    :title="props.title"
+  >
+    <template v-slot:prepend>
+      <v-avatar style="padding:4px 0 0 10px">
+        <user-icon :IconBase64="myIconBase64" size="40px"/>
+      </v-avatar>
+    </template>
+    <template v-slot:append>
+      <message-options />
+    </template>
     <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
     <v-container>
       <v-row class="text-center">
@@ -18,7 +19,9 @@
           <message-iframe />
         </v-col>
         <v-col>
-          <message-comment />
+          <message-comment>
+            {{ props.comment }}
+          </message-comment>
         </v-col>
       </v-row>
       <v-row>
@@ -33,5 +36,15 @@ import MessageIframe from './MessageIframe.vue';
 import MessageLabels from './MessageLabels.vue';
 import MessageComment from './MessageComment.vue';
 import MessageOptions from './MessageOptions.vue';
+import UserIcon from './UserIcon.vue';
+import { useLoginStatusStore } from '@/store/loginStatus';
+import { storeToRefs } from 'pinia';
+
+const props = defineProps<{
+  title: string
+  comment: string
+}>()
+
+const { myIconBase64 } = storeToRefs(useLoginStatusStore())
 
 </script>

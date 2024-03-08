@@ -3,21 +3,25 @@
     <img src="../assets/visitor-icon.png" :class="$style.icon" />
   </div>
   <div v-else>
-    <img :src="props.IconImgSrc" :class="$style.icon" />
+    <img :src="IconImgSrc" :class="$style.icon" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
     isVisitor?: boolean
-    IconImgSrc?: string
+    IconBase64?: string
     size?: string
 }>(),{
     isVisitor: false,
-    IconImgSrc: '',
+    IconBase64: '',
     size: '35px'
 })
+
+const IconImgSrc = computed(() => 
+"data:image/png;base64,"+props.IconBase64)
 
 </script>
 
