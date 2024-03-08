@@ -9,12 +9,16 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddMessage: typeof import('./src/components/AddMessage.vue')['default']
     LabelComponent: typeof import('./src/components/LabelComponent.vue')['default']
+    MessageComment: typeof import('./src/components/MessageComment.vue')['default']
     MessageComponent: typeof import('./src/components/MessageComponent.vue')['default']
+    MessageContent: typeof import('./src/components/MessageContent.vue')['default']
     MessageIfram: typeof import('./src/components/MessageIfram.vue')['default']
     MessageIframe: typeof import('./src/components/MessageIframe.vue')['default']
     MessageLabels: typeof import('./src/components/MessageLabels.vue')['default']
+    MessageOptions: typeof import('./src/components/MessageOptions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserIcon: typeof import('./src/components/UserIcon.vue')['default']
     UserIconButton: typeof import('./src/components/UserIconButton.vue')['default']
   }
 }

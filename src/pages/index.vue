@@ -1,7 +1,7 @@
 <template>
-
   <message-component />
-
+  <message-component />
+  <message-component />
   <add-message />
 </template>
 

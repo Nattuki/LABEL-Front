@@ -27,6 +27,8 @@
         <v-btn 
           icon="mdi-send" 
           type="submit"
+          variant="plain"
+          color="blue"
           :disabled="!isValid"/>
       </v-card-actions>
     </v-form>
@@ -92,14 +94,14 @@ const rules = {
 .addButton{
   position: fixed;
   left: 50%;
-  bottom:50px;
+  top:85%;
   transform: translateX(-50%)
              translateY(-50%);
 }
 .form{
   position: fixed;
   left: 50%;
-  bottom:30px;
+  top:60%;
   transform: translateX(-50%)
              translateY(-50%);
   width:50vw;

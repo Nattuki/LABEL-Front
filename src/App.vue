@@ -3,8 +3,9 @@
     <v-app-bar>
       <template v-slot:prepend>
         <v-app-bar-nav-icon
-          variant="text"
+          variant="plain"
           @click.stop="drawer = !drawer"
+          :ripple="false"
         >
         </v-app-bar-nav-icon>
 
@@ -12,24 +13,24 @@
         LABEL
         </v-app-bar-title>
         
-        <v-btn to="/">
+        <v-btn to="/" :ripple="false" variant="text">
           <v-icon>
             mdi-home
           </v-icon>
         </v-btn>
 
-        <v-btn to="/mypage">
+        <v-btn to="/mypage" :ripple="false" variant="text">
           mypage
         </v-btn>
       </template>
 
       <template v-slot:append>
         <v-btn @click="moveToOAuth" v-if="isVisitor">
-          <img src="./assets/visitor-icon.png" :class="$style.myicon" />
+          <user-icon isVisitor />
           LogIn
         </v-btn>
-        <v-btn @click="logOut" v-if="!isVisitor">
-          <img :src="MyIconImgSrc" :class="$style.myicon" />
+        <v-btn @click="logOut" v-else>
+          <user-icon :IconImgSrc="MyIconImgSrc" />
           LogOut
         </v-btn>
       </template>
@@ -57,6 +58,7 @@
 import { ref, computed } from 'vue'
 import { useLoginStatusStore } from './store/loginStatus';
 import { storeToRefs } from 'pinia';
+import UserIcon from '@/components/UserIcon.vue'
 
 const loginStatusStore = useLoginStatusStore()
 const { isVisitor, myIconBase64 } = storeToRefs(loginStatusStore)
@@ -79,13 +81,3 @@ const logOut = async () => {
 }
 
 </script>
-
-<style lang="scss" module>
-.myicon{
-  height:35px;
-  width:35px;
-  border-radius: 50%;
-  margin-right:10px;
-}
-
-</style>
