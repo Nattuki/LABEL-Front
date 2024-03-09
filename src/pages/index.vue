@@ -1,13 +1,43 @@
 <template>
-  <message-component title="タイトルは20字以内" comment="一言コメントなのでここの字数制限は50字以内にする"/>
-  <message-component title="タイトル2" comment="Comment 2です"/>
-  <message-component title="Title3" comment="Comment 3です"/>
-  <add-message />
+  <messages-view :key="pageNow" :page="pageNow"/>
+  <add-message @is-sent="reRender()"/>
+  <div class="text-center" :key="renderKey">
+    <v-container class="mt-4 pa-0">
+      <v-row justify="center">
+        <v-col cols="8">
+          <v-container class="max-width">
+            <v-pagination
+              v-model="pageNow"
+              :length="pages"
+            ></v-pagination>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import MessageComponent from '../components/MessageComponent.vue'
 import AddMessage from '../components/AddMessage.vue'
+import MessagesView from '@/components/MessagesView.vue'
+import { ref, onMounted } from 'vue';
 
+const pageNow = ref<number>(1)
+const pages = ref<number>(1)
+const renderKey = ref<number>(0)
+
+
+
+onMounted(async () => {
+  const res = await fetch('/api/message/countPages')
+  if(res.ok){
+    pages.value = (await res.json()).count
+  }
+})
+
+const reRender = () => {
+  pageNow.value = 1
+  renderKey.value++
+} 
 
 </script>

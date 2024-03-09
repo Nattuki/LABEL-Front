@@ -1,38 +1,51 @@
 <template>
-  <v-card v-if="isShowed" :class="$style.form">
-    <v-form 
-      ref="messageForm" 
-      v-model="isValid" 
-      @submit.prevent="sendMessage()">
-      <v-card-text>
-        <v-text-field 
-          v-model="titleToSend" 
-          label="title" 
-          density="comfortable"
-          :rules="[rules.required, rules.count]"
-          clearable 
-        >
-        </v-text-field>
-        <v-text-field 
-          v-model="urlToSend" 
-          label="url"
-          density="comfortable" 
-          :rules="[rules.required, rules.formatted]"
-          clearable
-        >
-        </v-text-field>
-        {{ text }}
-      </v-card-text>
-      <v-card-actions class="justify-end">
-        <v-btn 
-          icon="mdi-send" 
-          type="submit"
-          variant="plain"
-          color="blue"
-          :disabled="!isValid"/>
-      </v-card-actions>
-    </v-form>
-  </v-card>
+  <div :class="$style.form" v-if="isShowed">
+    <v-card>
+      <v-form 
+        ref="messageForm" 
+        v-model="isValid" 
+        @submit.prevent="sendMessage()">
+        <v-card-text class="pb-0">
+          <v-text-field
+            variant="outlined"
+            v-model="titleToSend" 
+            label="title" 
+            density="comfortable"
+            :rules="[rules.required, rules.countTitle]"
+            clearable 
+          >
+          </v-text-field>
+          <v-text-field 
+            variant="outlined"
+            v-model="commentToSend" 
+            label="comment" 
+            density="comfortable"
+            :rules="[rules.required, rules.countComment]"
+            clearable 
+          >
+          </v-text-field>
+          <v-text-field
+            variant="outlined"
+            v-model="urlToSend" 
+            label="url"
+            density="comfortable" 
+            :rules="[rules.required, rules.formatted]"
+            clearable
+          >
+          </v-text-field>
+          {{ text }}
+        </v-card-text>
+        <v-card-actions class="justify-end pt-0 mt-0">
+          <v-btn 
+            icon="mdi-send" 
+            type="submit"
+            variant="plain"
+            color="blue"
+            :disabled="!isValid"/>
+        </v-card-actions>
+      </v-form>
+    </v-card>
+  </div>
   <v-btn
     elevation="3"
     icon="mdi-plus"
@@ -56,8 +69,10 @@ const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
 const urlToSend = ref<string>('')
 const titleToSend = ref<string>('')
+const commentToSend = ref<string>('')
 const text = ref<string>('none')
 
+const emit = defineEmits(['isSent'])
 
 const toShowTheForm = () => {
   if(!isVisitor.value){
@@ -68,9 +83,10 @@ const toShowTheForm = () => {
 const sendMessage = async () => {
   const data = {
     Title: titleToSend.value,
+    Comment: commentToSend.value,
     Url: urlToSend.value
   }
-  const res = await fetch('/api/message', {
+  const res = await fetch('/api/message/send', {
     method: 'POST',
     headers: {
         "Content-Type": "application/json",
@@ -79,12 +95,14 @@ const sendMessage = async () => {
   })
   if(res.ok){
     text.value = await res.text()
+    emit('isSent')
   }
 }
 
 const rules = {
   required: (value: string) => !!value || '入力内容が必要',
-  count: (value: string) => value.length <= 20 || '文字数制限を超える',
+  countTitle: (value: string) => value.length <= 20 || '文字数制限を超える',
+  countComment: (value:string) => value.length <=50 || '文字数制限を超える',
   formatted: (value: string) => new RegExp('^https://www.youtube.com/embed/.+').test(value) || '正しくないurl形式'
 }
 
@@ -97,13 +115,15 @@ const rules = {
   top:85%;
   transform: translateX(-50%)
              translateY(-50%);
+  z-index: 10;
 }
 .form{
   position: fixed;
   left: 50%;
-  top:60%;
+  top:55%;
   transform: translateX(-50%)
              translateY(-50%);
   width:50vw;
+  z-index: 10;
 }
 </style>

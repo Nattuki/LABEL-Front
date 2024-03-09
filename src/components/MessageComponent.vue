@@ -1,11 +1,11 @@
 <template>
   <v-card 
-    class="my-12" 
+    class="mt-12" 
     elevation="10" 
     :title="props.title"
   >
     <template v-slot:prepend>
-      <v-avatar style="padding:4px 0 0 10px">
+      <v-avatar style="padding:4px 0 0 10px;">
         <user-icon :IconBase64="myIconBase64" size="40px"/>
       </v-avatar>
     </template>

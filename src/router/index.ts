@@ -17,7 +17,7 @@ const router = createRouter({
 
 router.beforeEach(async ()=> {
    const loginStatusStore = useLoginStatusStore()
-   const res = await fetch('/api/getme')
+   const res = await fetch('/api/me')
    if(res.ok){
       const myInformation = await res.json()
       loginStatusStore.isVisitor = myInformation.IsVisitor
