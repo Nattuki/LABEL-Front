@@ -1,50 +1,53 @@
 <template>
-  <div :class="$style.form" v-if="isShowed">
-    <v-card>
-      <v-form 
-        ref="messageForm" 
-        v-model="isValid" 
-        @submit.prevent="sendMessage()">
-        <v-card-text class="pb-0">
-          <v-text-field
-            variant="outlined"
-            v-model="titleToSend" 
-            label="title" 
-            density="comfortable"
-            :rules="[rules.required, rules.countTitle]"
-            clearable 
-          >
-          </v-text-field>
-          <v-text-field 
-            variant="outlined"
-            v-model="commentToSend" 
-            label="comment" 
-            density="comfortable"
-            :rules="[rules.required, rules.countComment]"
-            clearable 
-          >
-          </v-text-field>
-          <v-text-field
-            variant="outlined"
-            v-model="urlToSend" 
-            label="url"
-            density="comfortable" 
-            :rules="[rules.required, rules.formatted]"
-            clearable
-          >
-          </v-text-field>
-        </v-card-text>
-        <v-card-actions class="justify-end pt-0 mt-0">
-          <v-btn 
-            icon="mdi-send" 
-            type="submit"
-            variant="plain"
-            color="blue"
-            :disabled="!isValid"/>
-        </v-card-actions>
-      </v-form>
-    </v-card>
-  </div>
+  <v-slide-y-reverse-transition>
+    <div :class="$style.form" v-show="isShowed">
+      <v-card>
+        <v-form 
+          ref="messageForm" 
+          v-model="isValid" 
+          @submit.prevent="sendMessage()">
+          <v-card-text class="pb-0">
+            <v-text-field
+              variant="outlined"
+              v-model="titleToSend" 
+              label="title" 
+              density="comfortable"
+              :rules="[rules.required, rules.countTitle]"
+              clearable 
+            >
+            </v-text-field>
+            <v-textarea
+              rows="2" 
+              variant="outlined"
+              v-model="commentToSend" 
+              label="comment" 
+              density="comfortable"
+              :rules="[rules.required, rules.countComment]"
+              clearable 
+            >
+            </v-textarea>
+            <v-text-field
+              variant="outlined"
+              v-model="urlToSend" 
+              label="url"
+              density="comfortable" 
+              :rules="[rules.required, rules.formatted]"
+              clearable
+            >
+            </v-text-field>
+          </v-card-text>
+          <v-card-actions class="justify-end pt-0 mt-0">
+            <v-btn 
+              icon="mdi-send" 
+              type="submit"
+              variant="plain"
+              color="blue"
+              :disabled="!isValid"/>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </div>
+  </v-slide-y-reverse-transition>
   <v-btn
     elevation="3"
     icon="mdi-plus"

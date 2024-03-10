@@ -1,8 +1,10 @@
 <template>
+<v-scroll-x-transition>
   <v-card 
     class="mt-12" 
     elevation="10" 
     :title="props.title"
+    v-show="isShowed"
   >
     <template v-slot:prepend>
       <v-tooltip :text="creatorName" location="left">
@@ -33,6 +35,7 @@
       </v-row>
     </v-container>
   </v-card>
+</v-scroll-x-transition>
 </template>
 
 <script lang="ts" setup>
@@ -53,11 +56,13 @@ const props = defineProps<{
 }>()
 
 const iconUrl = ref<string>('')
+const isShowed = ref<boolean>(false)
 
 onMounted(async () => {
   const res = await fetch(`https://q.trap.jp/api/v3/public/icon/${props.creatorName}`)
   const data = await res.blob()
   iconUrl.value = window.URL.createObjectURL(data)
+  isShowed.value = true
 })
 
 </script>
