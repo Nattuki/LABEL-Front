@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddMessage: typeof import('./src/components/AddMessage.vue')['default']
     LabelComponent: typeof import('./src/components/LabelComponent.vue')['default']
+    MainView: typeof import('./src/components/MainView.vue')['default']
     MessageComment: typeof import('./src/components/MessageComment.vue')['default']
     MessageComponent: typeof import('./src/components/MessageComponent.vue')['default']
     MessageContent: typeof import('./src/components/MessageContent.vue')['default']

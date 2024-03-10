@@ -96,6 +96,8 @@ const sendMessage = async () => {
   if(res.ok){
     text.value = await res.text()
     emit('isSent')
+    isShowed.value = false
+    clear()
   }
 }
 
@@ -104,6 +106,12 @@ const rules = {
   countTitle: (value: string) => value.length <= 20 || '文字数制限を超える',
   countComment: (value:string) => value.length <=50 || '文字数制限を超える',
   formatted: (value: string) => new RegExp('^https://www.youtube.com/embed/.+').test(value) || '正しくないurl形式'
+}
+
+const clear = () => {
+  titleToSend.value = ''
+  commentToSend.value = ''
+  urlToSend.value = ''
 }
 
 </script>
