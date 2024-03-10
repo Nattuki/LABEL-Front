@@ -5,9 +5,13 @@
     :title="props.title"
   >
     <template v-slot:prepend>
-      <v-avatar style="padding:4px 0 0 10px;">
-        <user-icon :isBase64="false" :iconSrc="iconUrl" size="40px"/>
-      </v-avatar>
+      <v-tooltip :text="creatorName" location="left">
+        <template v-slot:activator="{ props }">
+          <v-avatar v-bind="props" style="padding:4px 0 0 10px;">
+            <user-icon :isBase64="false" :iconSrc="iconUrl" size="40px"/>
+          </v-avatar>
+        </template>
+      </v-tooltip>
     </template>
     <template v-slot:append>
       <message-options :creatorName="props.creatorName" :messageId="props.messageId" />
