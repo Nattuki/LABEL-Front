@@ -10,13 +10,13 @@
       </v-avatar>
     </template>
     <template v-slot:append>
-      <message-options :messageId="messageId" />
+      <message-options :creatorName="props.creatorName" :messageId="props.messageId" />
     </template>
     <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
     <v-container>
       <v-row class="text-center">
         <v-col>
-          <message-iframe />
+          <message-iframe :url="props.url"/>
         </v-col>
         <v-col>
           <message-comment>
@@ -42,8 +42,11 @@ import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
   messageId: string
+  creatorName: string
   title: string
   comment: string
+  url: string
+  createdOn: string
 }>()
 
 const { myIconBase64 } = storeToRefs(useLoginStatusStore())

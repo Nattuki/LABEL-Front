@@ -21,6 +21,7 @@ router.beforeEach(async ()=> {
    if(res.ok){
       const myInformation = await res.json()
       loginStatusStore.isVisitor = myInformation.IsVisitor
+      loginStatusStore.myName = myInformation.MyName
       loginStatusStore.myIconBase64 = myInformation.MyIconBase64
    }
    return true

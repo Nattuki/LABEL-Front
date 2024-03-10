@@ -1,8 +1,12 @@
 <template>
   <div v-for="message in messages" :key="message.messageId">
-    <message-comment 
+    <message-comment
+      :messageId="message.messageId"
+      :creatorName="message.creatorName"
       :title="message.title" 
-      :comment="message.comment" 
+      :comment="message.comment"
+      :url="message.url"
+      :createdOn="message.createdOn"
     />
   </div>
 </template>

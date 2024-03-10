@@ -1,7 +1,7 @@
 <template>
   <iframe 
     ref="embed" 
-    src="https://www.youtube.com/embed/rxIB4nXIpmg"
+    :src="props.url"
     width="352" 
     height="198" 
     title="YouTube video player" 
@@ -10,3 +10,9 @@
   >
   </iframe>
 </template>
+
+<script lang="ts" setup>
+const props = defineProps<{
+  url: string
+}>()
+</script>
