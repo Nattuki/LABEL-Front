@@ -6,9 +6,10 @@
 <script lang="ts" setup>
 import AddMessage from '../components/AddMessage.vue'
 import MainView from '@/components/MainView.vue';
-import { ref } from 'vue';
+import { useRenderKeyStore } from '@/store/renderKey';
+import { storeToRefs } from 'pinia';
 
-const renderKey = ref<number>(0)
+const { renderKey } = storeToRefs(useRenderKeyStore())
 
 const reRender = () => {
   renderKey.value++

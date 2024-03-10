@@ -10,7 +10,7 @@
       </v-avatar>
     </template>
     <template v-slot:append>
-      <message-options />
+      <message-options :messageId="messageId" />
     </template>
     <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
     <v-container>
@@ -41,6 +41,7 @@ import { useLoginStatusStore } from '@/store/loginStatus';
 import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
+  messageId: string
   title: string
   comment: string
 }>()
