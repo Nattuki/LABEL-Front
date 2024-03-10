@@ -33,7 +33,6 @@
             clearable
           >
           </v-text-field>
-          {{ text }}
         </v-card-text>
         <v-card-actions class="justify-end pt-0 mt-0">
           <v-btn 
@@ -70,7 +69,6 @@ const isShowed = ref<boolean>(false)
 const urlToSend = ref<string>('')
 const titleToSend = ref<string>('')
 const commentToSend = ref<string>('')
-const text = ref<string>('none')
 
 const emit = defineEmits(['isSent'])
 
@@ -94,7 +92,6 @@ const sendMessage = async () => {
     body: JSON.stringify(data),
   })
   if(res.ok){
-    text.value = await res.text()
     emit('isSent')
     isShowed.value = false
     clear()

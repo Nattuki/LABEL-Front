@@ -30,7 +30,7 @@
           LogIn
         </v-btn>
         <v-btn @click="logOut" v-else>
-          <user-icon :IconBase64="myIconBase64" />
+          <user-icon :iconSrc="myIconBase64" />
           LogOut
         </v-btn>
       </template>

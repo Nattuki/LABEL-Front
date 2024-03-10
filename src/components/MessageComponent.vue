@@ -6,7 +6,7 @@
   >
     <template v-slot:prepend>
       <v-avatar style="padding:4px 0 0 10px;">
-        <user-icon :IconBase64="myIconBase64" size="40px"/>
+        <user-icon :isBase64="false" :iconSrc="iconUrl" size="40px"/>
       </v-avatar>
     </template>
     <template v-slot:append>
@@ -37,8 +37,7 @@ import MessageLabels from './MessageLabels.vue';
 import MessageComment from './MessageComment.vue';
 import MessageOptions from './MessageOptions.vue';
 import UserIcon from './UserIcon.vue';
-import { useLoginStatusStore } from '@/store/loginStatus';
-import { storeToRefs } from 'pinia';
+import { ref, onMounted } from 'vue';
 
 const props = defineProps<{
   messageId: string
@@ -49,6 +48,12 @@ const props = defineProps<{
   createdOn: string
 }>()
 
-const { myIconBase64 } = storeToRefs(useLoginStatusStore())
+const iconUrl = ref<string>('')
+
+onMounted(async () => {
+  const res = await fetch(`https://q.trap.jp/api/v3/public/icon/${props.creatorName}`)
+  const data = await res.blob()
+  iconUrl.value = window.URL.createObjectURL(data)
+})
 
 </script>

@@ -3,7 +3,7 @@
     <img src="../assets/visitor-icon.png" :class="$style.icon" />
   </div>
   <div v-else>
-    <img :src="IconImgSrc" :class="$style.icon" />
+    <img :src="iconSrc" :class="$style.icon" />
   </div>
 </template>
 
@@ -12,16 +12,23 @@ import { computed } from 'vue';
 
 const props = withDefaults(defineProps<{
     isVisitor?: boolean
-    IconBase64?: string
+    isBase64?: boolean
+    iconSrc?: string
     size?: string
 }>(),{
     isVisitor: false,
-    IconBase64: '',
+    isBase64: true,
+    iconSrc: '',
     size: '35px'
 })
 
-const IconImgSrc = computed(() => 
-"data:image/png;base64,"+props.IconBase64)
+const iconSrc = computed(() => {
+  if(props.isBase64){
+    return "data:image/png;base64," + props.iconSrc
+  }else{
+    return props.iconSrc
+  }
+})
 
 </script>
 
