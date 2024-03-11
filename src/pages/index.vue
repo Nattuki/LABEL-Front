@@ -1,5 +1,5 @@
 <template>
-  <main-view :key="renderKey"/>
+  <main-view :key="viewRenderKey"/>
   <add-message @is-sent="reRender()"/>
 </template>
 
@@ -9,9 +9,9 @@ import MainView from '@/components/MainView.vue';
 import { useRenderKeyStore } from '@/store/renderKey';
 import { storeToRefs } from 'pinia';
 
-const { renderKey } = storeToRefs(useRenderKeyStore())
+const { viewRenderKey } = storeToRefs(useRenderKeyStore())
 
 const reRender = () => {
-  renderKey.value++
+  viewRenderKey.value++
 } 
 </script>

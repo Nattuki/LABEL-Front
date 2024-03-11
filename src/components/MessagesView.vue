@@ -1,6 +1,6 @@
 <template>
   <div v-for="message in messages" :key="message.messageId">
-    <message-comment
+    <message-component
       :messageId="message.messageId"
       :creatorName="message.creatorName"
       :title="message.title" 
@@ -12,9 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import type { Message } from '@/types/messages';
-import MessageComment from '@/components/MessageComponent.vue';
+import { ref, onMounted } from 'vue'
+import type { Message } from '@/types/messages'
+import MessageComponent from '@/components/MessageComponent.vue'
+
 
 const messages = ref<Message[]>()
 

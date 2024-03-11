@@ -31,7 +31,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <message-labels />
+        <message-labels :key="messageRenderKey" :message-id="props.messageId" @toReRender="messageRenderKey++"/>
       </v-row>
     </v-container>
   </v-card>
@@ -57,6 +57,7 @@ const props = defineProps<{
 
 const iconUrl = ref<string>('')
 const isShowed = ref<boolean>(false)
+const messageRenderKey = ref<number>(0)
 
 onMounted(async () => {
   const res = await fetch(`https://q.trap.jp/api/v3/public/icon/${props.creatorName}`)

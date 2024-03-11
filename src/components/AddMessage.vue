@@ -14,8 +14,7 @@
               density="comfortable"
               :rules="[rules.required, rules.countTitle]"
               clearable 
-            >
-            </v-text-field>
+            ></v-text-field>
             <v-textarea
               rows="2" 
               variant="outlined"
@@ -23,9 +22,7 @@
               label="comment" 
               density="comfortable"
               :rules="[rules.required, rules.countComment]"
-              clearable 
-            >
-            </v-textarea>
+            ></v-textarea>
             <v-text-field
               variant="outlined"
               v-model="urlToSend" 
@@ -33,8 +30,7 @@
               density="comfortable" 
               :rules="[rules.required, rules.formatted]"
               clearable
-            >
-            </v-text-field>
+            ></v-text-field>
           </v-card-text>
           <v-card-actions class="justify-end pt-0 mt-0">
             <v-btn 
@@ -42,8 +38,7 @@
               type="submit"
               variant="plain"
               color="blue"
-              :disabled="!isValid"/>
-          </v-card-actions>
+              :disabled="!isValid"/></v-card-actions>
         </v-form>
       </v-card>
     </div>
@@ -102,9 +97,9 @@ const sendMessage = async () => {
 }
 
 const rules = {
-  required: (value: string) => !!value || '入力内容が必要',
-  countTitle: (value: string) => value.length <= 20 || '文字数制限を超える',
-  countComment: (value:string) => value.length <=50 || '文字数制限を超える',
+  required: (value: string) => !!value || '入力内容が必要です',
+  countTitle: (value: string) => value.length <= 20 || '文字数制限を超えます',
+  countComment: (value:string) => value.length <=50 || '文字数制限を超えます',
   formatted: (value: string) => new RegExp('^https://www.youtube.com/embed/.+').test(value) || '正しくないurl形式'
 }
 

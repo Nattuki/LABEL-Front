@@ -18,7 +18,7 @@ const props = defineProps<{
   messageId: string
 }>()
 
-const { renderKey } = storeToRefs(useRenderKeyStore())
+const { viewRenderKey } = storeToRefs(useRenderKeyStore())
 const { myName } = storeToRefs(useLoginStatusStore())
 
 const ableToDelete = computed(() => myName.value === props.creatorName)
@@ -26,9 +26,9 @@ const ableToDelete = computed(() => myName.value === props.creatorName)
 const toDelete = async () => {
   const res = await fetch(`/api/message/delete/${props.messageId}`, {
       method: "DELETE", 
-    });
+    })
   if(res.ok){
-    renderKey.value++
+    viewRenderKey.value++
   }
 }
 
