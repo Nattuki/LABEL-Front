@@ -28,7 +28,7 @@
         >
           {{ timeToShow }}
         </v-col>
-        <v-col class="pa-0" cols="3">
+        <v-col class="pa-0" cols="3" v-if="myName===props.creatorName">
           <v-btn 
           variant="plain"
           :ripple="false"
@@ -52,12 +52,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
-import LabelDeleteConfirm from '@/components/LabelDeleteConfirm.vue';
+import { ref, onMounted, computed } from 'vue'
+import { useLoginStatusStore } from '@/store/loginStatus'
+import { storeToRefs } from 'pinia'
+import LabelDeleteConfirm from '@/components/LabelDeleteConfirm.vue'
+
 
 const iconUrl = ref<string>('')
 const confirming = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
+const { myName } = storeToRefs(useLoginStatusStore())
 
 const props = defineProps<{
     labelId: string
