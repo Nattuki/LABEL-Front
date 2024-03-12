@@ -28,7 +28,7 @@
             <v-text-field
               variant="outlined"
               v-model="urlToSend" 
-              label="url"
+              label="YouTube url"
               density="comfortable" 
               :rules="[rules.required, rules.formatted]"
               clearable
@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { useLoadingStatusStore } from '@/store/loadingstatus'
 import { storeToRefs } from 'pinia'
@@ -100,7 +100,7 @@ const sendMessage = async () => {
   const data = {
     Title: titleToSend.value,
     Comment: commentToSend.value,
-    Url: urlToSend.value
+    Url: convertToEmbedUrl(urlToSend.value)
   }
   const res = await fetch('/api/message/send', {
     method: 'POST',
@@ -109,11 +109,11 @@ const sendMessage = async () => {
       },
     body: JSON.stringify(data),
   })
+  isLoading.value = false
   if(res.ok){
     emit('isSent')
     isShowed.value = false
     clear()
-    isLoading.value = false
   }
 }
 
@@ -121,13 +121,18 @@ const rules = {
   required: (value: string) => !!value || '入力内容が必要です',
   countTitle: (value: string) => value.length <= 20 || '文字数制限を超えます',
   countComment: (value:string) => value.length <=50 || '文字数制限を超えます',
-  formatted: (value: string) => new RegExp('^https://www.youtube.com/embed/.+').test(value) || '正しくないurl形式'
+  formatted: (value: string) => new RegExp('^https://www.youtube.com/watch[?]v=.+').test(value) || '正しくないurl形式'
 }
 
 const clear = () => {
   titleToSend.value = ''
   commentToSend.value = ''
   urlToSend.value = ''
+}
+
+const convertToEmbedUrl = (url: string): string => {
+    const s = url.substring(32)
+    return 'https://www.youtube.com/embed/' + s
 }
 
 </script>

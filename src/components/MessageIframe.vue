@@ -1,5 +1,5 @@
 <template>
-  <iframe 
+  <iframe
     ref="embed" 
     :src="urlSrc"
     width="352" 
@@ -29,5 +29,4 @@ const seekTo = (TimeToSeek: number[]) => {
     const TimeToSeekJSON = TimeToSeek !== undefined ? JSON.stringify(TimeToSeek) : '""'
     embed.value?.contentWindow?.postMessage(`{"event":"command","func":"seekTo","args":${TimeToSeekJSON}}`, '*')
 }
-
 </script>

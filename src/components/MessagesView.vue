@@ -28,9 +28,9 @@ const props = defineProps<{
 onMounted(async () => {
     isLoading.value = true
     const res = await fetch(`/api/message/get/${props.page}`)
+    isLoading.value = false
     if(res.ok){
       messages.value = await res.json()
-      isLoading.value = false
     }
 })
 

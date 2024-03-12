@@ -59,9 +59,9 @@ const pleaseLogin = ref<boolean>(false)
 onMounted(async () => {
     isLoading.value = true
     const res = await fetch(`/api/label/get/${props.messageId}`)
+    isLoading.value = false
     if(res.ok){
       labels.value = await res.json()
-      isLoading.value = false
     }
 
 })

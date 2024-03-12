@@ -131,9 +131,9 @@ const sendLabel = async () => {
       },
     body: JSON.stringify(data),
   })
+  isLoading.value = false
   if(res.ok){
     emit('toReRender')
-    isLoading.value = false
   }
 }
 </script>
