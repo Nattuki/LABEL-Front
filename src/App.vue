@@ -8,16 +8,12 @@
           :ripple="false"
         >
         </v-app-bar-nav-icon>
-
-        <v-app-bar-title>
-          LABEL
-        </v-app-bar-title>
-        
-        <v-btn to="/" :ripple="false" variant="text">
+        <img src="./assets/icon.svg" width="50px" height="50px">        
+        <v-btn to="/" :ripple="false" variant="plain">
           HOME
         </v-btn>
 
-        <v-btn to="/mypage" :ripple="false" variant="text">
+        <v-btn to="/mypage" :ripple="false" variant="plain">
           mypage
         </v-btn>
       </template>
