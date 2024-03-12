@@ -24,6 +24,7 @@ declare module 'vue' {
     MessageOptions: typeof import('./src/components/MessageOptions.vue')['default']
     MessagesView: typeof import('./src/components/MessagesView.vue')['default']
     PaginationComponent: typeof import('./src/components/PaginationComponent.vue')['default']
+    RemindLoginModal: typeof import('./src/components/RemindLoginModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserIcon: typeof import('./src/components/UserIcon.vue')['default']

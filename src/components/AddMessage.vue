@@ -52,28 +52,33 @@
         </v-form>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="pleaseLogin" maxWidth="250px">
+      <remind-login-modal @close="pleaseLogin=false" />
+    </v-dialog>
+    <v-btn
+      elevation="3"
+      icon="mdi-plus"
+      @click="toShowTheForm"
+      :class="$style.addButton"
+      :color="isVisitor? 'grey' : 'black'"
+      :ripple="false"
+    >
+    </v-btn>
 
-  <v-btn
-    elevation="3"
-    icon="mdi-plus"
-    @click="toShowTheForm"
-    :class="$style.addButton"
-    :disabled="isVisitor"
-    color="black"
-  >
-  </v-btn>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useLoginStatusStore } from '@/store/loginStatus';
 import { storeToRefs } from 'pinia';
+import RemindLoginModal from '@/components/RemindLoginModal.vue';
 
 const loginStatusStore = useLoginStatusStore()
 const { isVisitor } = storeToRefs(loginStatusStore)
 
 const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
+const pleaseLogin = ref<boolean>(false)
 const urlToSend = ref<string>('')
 const titleToSend = ref<string>('')
 const commentToSend = ref<string>('')
@@ -81,7 +86,9 @@ const commentToSend = ref<string>('')
 const emit = defineEmits(['isSent'])
 
 const toShowTheForm = () => {
-  if(!isVisitor.value){
+  if(isVisitor.value){
+    pleaseLogin.value = true
+  }else{
     isShowed.value = true
   }
 }

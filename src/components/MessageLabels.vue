@@ -10,6 +10,7 @@
         :content="label.content"
         :creatorName="label.creatorName"
         :jumpTime="label.jumpTime"
+        :labelColor="label.labelColor"
         @toReRender="toReRender()"
         @toSeek="(jumpTime) => toSeek(jumpTime)"
       />
@@ -19,7 +20,7 @@
         color="grey-lighten-1"
         height="100"
         width="150"
-        @click="dialogIsShowed = true"
+        @click="checkIfLogin()"
       >
         <div class="d-flex fill-height align-center justify-center">
           <v-icon icon="mdi-plus-circle-outline" color="white" size="48"/>
@@ -29,21 +30,29 @@
   <v-dialog v-model="dialogIsShowed" maxWidth="500px">
     <add-label @toReRender="toReRender()" @cancel="dialogIsShowed = false" :messageId="props.messageId" />
   </v-dialog>
+  <v-dialog v-model="pleaseLogin" maxWidth="250px">
+    <remind-login-modal @close="pleaseLogin=false"/>
+  </v-dialog>
 </template>
 
 <script lang="ts" setup>
 import MessageLabel from '@/components/MessageLabel.vue'
 import AddLabel from '@/components/AddLabel.vue'
-import { ref, onMounted } from 'vue';
-import type { Label } from '@/types/messages';
+import RemindLoginModal from '@/components/RemindLoginModal.vue'
+import { useLoginStatusStore } from '@/store/loginStatus'
+import { ref, onMounted } from 'vue'
+import type { Label } from '@/types/messages'
+import { storeToRefs } from 'pinia'
 
-const labels = ref<Label[]>()
+const { isVisitor } = storeToRefs(useLoginStatusStore())
 
 const props = defineProps<{
     messageId: string
 }>()
 
+const labels = ref<Label[]>()
 const dialogIsShowed = ref<boolean>(false)
+const pleaseLogin = ref<boolean>(false)
 
 onMounted(async () => {
     const res = await fetch(`/api/label/get/${props.messageId}`)
@@ -53,5 +62,13 @@ onMounted(async () => {
 const emit = defineEmits(['toReRender', 'toSeek'])
 const toReRender = () => emit('toReRender')
 const toSeek = (jumpTime: number) => emit('toSeek', jumpTime)
+
+const checkIfLogin = () => {
+    if(isVisitor.value){
+        pleaseLogin.value = true
+    }else{
+        dialogIsShowed.value = true
+    }
+}
 
 </script>

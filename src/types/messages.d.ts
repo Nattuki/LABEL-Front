@@ -11,6 +11,7 @@ export type Label = {
     labelId: string
     messageId: string
     content: string
+    labelColor: string
     jumpTime: number
     creatorName: string
     createdOn: string

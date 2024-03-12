@@ -2,7 +2,7 @@
   <v-slide-y-reverse-transition>
     <v-card
       class="mx-3 mb-4"
-      color="cyan-lighten-3"
+      :color=props.labelColor
       height="100"
       width="150"
       v-show="isShowed"
@@ -69,6 +69,7 @@ const props = defineProps<{
     labelId: string
     messageId: string
     content: string
+    labelColor: string
     jumpTime: number
     creatorName: string
 }>()

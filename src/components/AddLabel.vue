@@ -47,6 +47,23 @@
           ></v-text-field>
         </v-col>
       </v-row>
+      <v-radio-group inline class="mx-1" v-model="labelColor">
+        <v-radio :ripple="false" value="cyan-lighten-3" color="cyan-lighten-1" base-color="cyan-lighten-1">
+          <template v-slot:label>
+            <strong>Color 1</strong>
+          </template>
+        </v-radio>
+        <v-radio :ripple="false" value="pink-accent-1" color="pink-accent-1" base-color="pink-accent-1">
+          <template v-slot:label>
+            <strong>Color 2</strong>
+          </template>
+        </v-radio>
+        <v-radio :ripple="false" value="light-green-accent-1" color="light-green-accent-1" base-color="light-green-accent-1">
+          <template v-slot:label>
+            <strong >Color 3</strong>
+          </template>
+        </v-radio>
+      </v-radio-group>
       <v-card-actions class="justify-end pt-0">
         <v-btn
           variant="plain"
@@ -76,6 +93,7 @@ const contentToSend = ref<string>()
 const hourToSend =ref<number>(0)
 const minuteToSend = ref<number>(0)
 const secondToSend = ref<number>(0)
+const labelColor = ref<string>('cyan-lighten-1')
 
 const timeToSend = computed(() => 
     hourToSend.value*3600 + minuteToSend.value*60 + secondToSend.value*1
@@ -100,6 +118,7 @@ const sendLabel = async () => {
     messageId: props.messageId,
     content: contentToSend.value,
     jumpTime: timeToSend.value,
+    labelColor: labelColor.value
   }
   const res = await fetch('/api/label/send', {
     method: 'POST',
