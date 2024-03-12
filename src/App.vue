@@ -25,13 +25,27 @@
       </template>
 
       <template v-slot:append>
-        <v-btn @click="moveToOAuth" v-if="isVisitor">
+        <v-btn @click="dialogIsShowed=true" v-if="isVisitor">
           <user-icon isVisitor />
           LogIn
+          <v-dialog v-model="dialogIsShowed" maxWidth="250px">
+            <confirm-modal 
+              @confirm="moveToOAuth()" 
+              @cancel="dialogIsShowed=false"
+              :text="'ログインしますか'"
+            />
+          </v-dialog>
         </v-btn>
-        <v-btn @click="logOut" v-else>
+        <v-btn @click="dialogIsShowed=true" v-else>
           <user-icon :iconSrc="myIconBase64" />
           LogOut
+          <v-dialog v-model="dialogIsShowed" maxWidth="250px">
+            <confirm-modal 
+              @confirm="logOut()" 
+              @cancel="dialogIsShowed=false"
+              :text="'ログアウトしますか'"
+            />
+          </v-dialog>          
         </v-btn>
       </template>
     </v-app-bar>
@@ -49,7 +63,6 @@
           <router-view />
         </v-sheet>
       </v-container>
-
     </v-main>
   </v-app>
 </template>
@@ -58,12 +71,14 @@
 import { ref } from 'vue'
 import { useLoginStatusStore } from './store/loginStatus';
 import { storeToRefs } from 'pinia';
+import ConfirmModal from '@/components/ConfirmModal.vue';
 import UserIcon from '@/components/UserIcon.vue'
 
 const loginStatusStore = useLoginStatusStore()
 const { isVisitor, myIconBase64 } = storeToRefs(loginStatusStore)
 
 const drawer = ref<boolean>(false)
+const dialogIsShowed = ref<boolean>(false)
 
 const moveToOAuth = async () => {
   const res = await fetch('/api/loginpath')
