@@ -2,12 +2,18 @@
   <v-btn variant="plain" :ripple="false" >
     <v-icon size="x-large">mdi-dots-horizontal</v-icon>
     <v-menu activator="parent">
-      <v-btn @click="dialogIsShowed = true" :disabled="!ableToDelete">削除</v-btn>
+      <v-btn 
+        @click="dialogIsShowed = true" 
+        :disabled="!ableToDelete"
+      >
+        削除
+      </v-btn>
     </v-menu>
     <v-dialog v-model="dialogIsShowed" maxWidth="300px">
-      <message-delete-confirm 
-        @toDelete="toDelete()" 
+      <confirm-modal
+        @confirm="toDelete()" 
         @cancel="dialogIsShowed=false"
+        :text="'このメッセージを削除しますか'"
       />
     </v-dialog>
   </v-btn>
@@ -18,7 +24,7 @@ import { ref, computed } from 'vue'
 import { useRenderKeyStore } from '@/store/renderKey'
 import { storeToRefs } from 'pinia'
 import { useLoginStatusStore } from '@/store/loginStatus'
-import MessageDeleteConfirm from '@/components/MessageDeleteConfirm.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 const props = defineProps<{
   creatorName: string

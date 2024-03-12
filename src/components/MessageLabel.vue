@@ -44,10 +44,12 @@
     </v-card>
   </v-slide-y-reverse-transition>
   <v-dialog v-model="confirming" maxWidth="250px">
-    <label-delete-confirm 
-      @toDelete="toDelete()"
+    <confirm-modal
+      @confirm="toDelete()"
       @cancel="confirming = false" 
-      :labelId="props.labelId" />
+      :labelId="props.labelId"
+      :text="'このラベルを削除しますか'"
+    />
   </v-dialog>
 </template>
 
@@ -55,7 +57,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { storeToRefs } from 'pinia'
-import LabelDeleteConfirm from '@/components/LabelDeleteConfirm.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 
 const iconUrl = ref<string>('')

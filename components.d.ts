@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddLabel: typeof import('./src/components/AddLabel.vue')['default']
     AddMessage: typeof import('./src/components/AddMessage.vue')['default']
+    ConfirmModal: typeof import('./src/components/ConfirmModal.vue')['default']
     LabelComponent: typeof import('./src/components/LabelComponent.vue')['default']
     LabelDeleteConfirm: typeof import('./src/components/LabelDeleteConfirm.vue')['default']
     MainView: typeof import('./src/components/MainView.vue')['default']

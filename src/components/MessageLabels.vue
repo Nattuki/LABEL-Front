@@ -26,7 +26,7 @@
         </div>
       </v-card>
   </v-slide-group>
-  <v-dialog v-model="dialogIsShowed" maxWidth="500px" persistent>
+  <v-dialog v-model="dialogIsShowed" maxWidth="500px">
     <add-label @toReRender="toReRender()" @cancel="dialogIsShowed = false" :messageId="props.messageId" />
   </v-dialog>
 </template>

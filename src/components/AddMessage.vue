@@ -122,8 +122,8 @@ const clear = () => {
 <style lang="scss" module>
 .addButton{
   position: fixed;
-  left: 50%;
-  top:85%;
+  left: 93%;
+  top:90%;
   transform: translateX(-50%)
              translateY(-50%);
   z-index: 10;
