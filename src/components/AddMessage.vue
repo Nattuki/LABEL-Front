@@ -1,6 +1,6 @@
 <template>
-  <v-slide-y-reverse-transition>
-    <div :class="$style.form" v-show="isShowed">
+
+    <v-dialog v-model="isShowed" maxWidth="500px">
       <v-card>
         <v-form 
           ref="messageForm" 
@@ -33,16 +33,24 @@
             ></v-text-field>
           </v-card-text>
           <v-card-actions class="justify-end pt-0 mt-0">
+            <v-btn
+              variant="plain"
+              :ripple="false"
+              @click="isShowed = false"
+            >
+              CANCEL
+            </v-btn>
             <v-btn 
               icon="mdi-send" 
               type="submit"
               variant="plain"
               color="blue"
-              :disabled="!isValid"/></v-card-actions>
+              :disabled="!isValid"/>
+          </v-card-actions>
         </v-form>
       </v-card>
-    </div>
-  </v-slide-y-reverse-transition>
+    </v-dialog>
+
   <v-btn
     elevation="3"
     icon="mdi-plus"
@@ -72,7 +80,7 @@ const emit = defineEmits(['isSent'])
 
 const toShowTheForm = () => {
   if(!isVisitor.value){
-    isShowed.value = !isShowed.value
+    isShowed.value = true
   }
 }
 
@@ -118,15 +126,6 @@ const clear = () => {
   top:85%;
   transform: translateX(-50%)
              translateY(-50%);
-  z-index: 10;
-}
-.form{
-  position: fixed;
-  left: 50%;
-  top:55%;
-  transform: translateX(-50%)
-             translateY(-50%);
-  width:50vw;
   z-index: 10;
 }
 </style>
