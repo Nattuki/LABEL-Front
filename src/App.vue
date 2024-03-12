@@ -10,13 +10,11 @@
         </v-app-bar-nav-icon>
 
         <v-app-bar-title>
-        LABEL
+          LABEL
         </v-app-bar-title>
         
         <v-btn to="/" :ripple="false" variant="text">
-          <v-icon>
-            mdi-home
-          </v-icon>
+          HOME
         </v-btn>
 
         <v-btn to="/mypage" :ripple="false" variant="text">

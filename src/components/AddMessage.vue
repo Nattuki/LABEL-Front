@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { useLoadingStatusStore } from '@/store/loadingstatus'
 import { storeToRefs } from 'pinia'

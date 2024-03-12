@@ -21,13 +21,16 @@ import MessageComponent from '@/components/MessageComponent.vue'
 const { isLoading } = storeToRefs(useLoadingStatusStore())
 const messages = ref<Message[]>()
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     page: number
-}>()
+    userName?: string
+}>(),{
+    userName: ''
+})
 
 onMounted(async () => {
     isLoading.value = true
-    const res = await fetch(`/api/message/get/${props.page}`)
+    const res = await fetch(`/api/message/get/${props.page}?name=${props.userName}`)
     isLoading.value = false
     if(res.ok){
       messages.value = await res.json()
