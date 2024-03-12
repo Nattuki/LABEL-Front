@@ -9,7 +9,7 @@
       @click="toSeek()"
     >
       <v-row class="ma-0">
-        <v-col class="pa-0" cols="9">
+        <v-col class="pa-0" cols="3">
           <v-tooltip :text="creatorName" location="left" >
             <template v-slot:activator="{ props }">
               <user-icon
@@ -22,15 +22,21 @@
             </template>
           </v-tooltip>
         </v-col>
-          <v-col class="pa-0" cols="3">
-            <v-btn 
-            variant="plain"
-            :ripple="false"
-            icon="mdi-close" 
-            size="30px"
-            @click.stop="confirming = true"
-            />
-          </v-col>
+        <v-col 
+          cols="6" 
+          class="pa-0 ma-0 text-body-h6 d-flex align-center"
+        >
+          {{ timeToShow }}
+        </v-col>
+        <v-col class="pa-0" cols="3">
+          <v-btn 
+          variant="plain"
+          :ripple="false"
+          icon="mdi-close" 
+          size="30px"
+          @click.stop="confirming = true"
+          />
+        </v-col>
       </v-row>
       <v-card-text class="mx-3 pa-0 text-caption">
         {{ props.content }}
@@ -46,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import LabelDeleteConfirm from '@/components/LabelDeleteConfirm.vue';
 
 const iconUrl = ref<string>('')
@@ -81,9 +87,13 @@ const toDelete = async () => {
 
 const toSeek = () => emit('toSeek', props.jumpTime)
 
+const timeToShow = computed(() => {
+    const s = props.jumpTime % 60
+    const m = Math.floor(props.jumpTime / 60) % 60
+    const t = Math.floor(props.jumpTime / 3600)
+    
+    const ms = `0${m}`.slice(-2)+':'+`0${s}`.slice(-2)
+    return t === 0 ? ms : `${t}:` + ms
+})
+
 </script>
-
-<style lang="scss" module>
-
-
-</style>
