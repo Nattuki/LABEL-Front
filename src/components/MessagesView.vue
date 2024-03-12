@@ -14,9 +14,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import type { Message } from '@/types/messages'
+import { useLoadingStatusStore } from '@/store/loadingstatus'
+import { storeToRefs } from 'pinia'
 import MessageComponent from '@/components/MessageComponent.vue'
 
-
+const { isLoading } = storeToRefs(useLoadingStatusStore())
 const messages = ref<Message[]>()
 
 const props = defineProps<{
@@ -24,8 +26,12 @@ const props = defineProps<{
 }>()
 
 onMounted(async () => {
+    isLoading.value = true
     const res = await fetch(`/api/message/get/${props.page}`)
-    messages.value = await res.json()
+    if(res.ok){
+      messages.value = await res.json()
+      isLoading.value = false
+    }
 })
 
 </script>

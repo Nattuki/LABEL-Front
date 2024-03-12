@@ -86,14 +86,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
+import { useLoadingStatusStore } from '@/store/loadingstatus'
+import { storeToRefs } from 'pinia'
 
+const { isLoading } = storeToRefs(useLoadingStatusStore())
 const isValid = ref<boolean>(false)
 const contentToSend = ref<string>()
 const hourToSend =ref<number>(0)
 const minuteToSend = ref<number>(0)
 const secondToSend = ref<number>(0)
-const labelColor = ref<string>('cyan-lighten-1')
+const labelColor = ref<string>('cyan-lighten-3')
 
 const timeToSend = computed(() => 
     hourToSend.value*3600 + minuteToSend.value*60 + secondToSend.value*1
@@ -114,6 +117,7 @@ const rules = {
 }
 
 const sendLabel = async () => {
+  isLoading.value = true
   const data = {
     messageId: props.messageId,
     content: contentToSend.value,
@@ -129,6 +133,7 @@ const sendLabel = async () => {
   })
   if(res.ok){
     emit('toReRender')
+    isLoading.value = false
   }
 }
 </script>

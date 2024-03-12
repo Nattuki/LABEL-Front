@@ -58,6 +58,7 @@
     </v-navigation-drawer>
 
     <v-main>
+      <v-progress-linear indeterminate v-if="isLoading"></v-progress-linear>
       <v-container>
         <v-sheet min-height="20em">
           <router-view />
@@ -69,13 +70,14 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useLoginStatusStore } from './store/loginStatus';
-import { storeToRefs } from 'pinia';
-import ConfirmModal from '@/components/ConfirmModal.vue';
+import { useLoginStatusStore } from './store/loginStatus'
+import { useLoadingStatusStore } from './store/loadingstatus'
+import { storeToRefs } from 'pinia'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 import UserIcon from '@/components/UserIcon.vue'
 
-const loginStatusStore = useLoginStatusStore()
-const { isVisitor, myIconBase64 } = storeToRefs(loginStatusStore)
+const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore())
+const { isLoading } = storeToRefs(useLoadingStatusStore())
 
 const drawer = ref<boolean>(false)
 const dialogIsShowed = ref<boolean>(false)

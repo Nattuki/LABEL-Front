@@ -39,12 +39,14 @@
 import MessageLabel from '@/components/MessageLabel.vue'
 import AddLabel from '@/components/AddLabel.vue'
 import RemindLoginModal from '@/components/RemindLoginModal.vue'
+import { useLoadingStatusStore } from '@/store/loadingstatus'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { ref, onMounted } from 'vue'
 import type { Label } from '@/types/messages'
 import { storeToRefs } from 'pinia'
 
 const { isVisitor } = storeToRefs(useLoginStatusStore())
+const { isLoading } = storeToRefs(useLoadingStatusStore())
 
 const props = defineProps<{
     messageId: string
@@ -55,8 +57,13 @@ const dialogIsShowed = ref<boolean>(false)
 const pleaseLogin = ref<boolean>(false)
 
 onMounted(async () => {
+    isLoading.value = true
     const res = await fetch(`/api/label/get/${props.messageId}`)
-    labels.value = await res.json()
+    if(res.ok){
+      labels.value = await res.json()
+      isLoading.value = false
+    }
+
 })
 
 const emit = defineEmits(['toReRender', 'toSeek'])
@@ -70,5 +77,4 @@ const checkIfLogin = () => {
         dialogIsShowed.value = true
     }
 }
-
 </script>

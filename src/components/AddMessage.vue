@@ -47,6 +47,7 @@
               type="submit"
               variant="plain"
               color="blue"
+              :ripple="false"
               :disabled="!isValid"/>
           </v-card-actions>
         </v-form>
@@ -68,13 +69,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useLoginStatusStore } from '@/store/loginStatus';
-import { storeToRefs } from 'pinia';
-import RemindLoginModal from '@/components/RemindLoginModal.vue';
+import { ref } from 'vue'
+import { useLoginStatusStore } from '@/store/loginStatus'
+import { useLoadingStatusStore } from '@/store/loadingstatus'
+import { storeToRefs } from 'pinia'
+import RemindLoginModal from '@/components/RemindLoginModal.vue'
 
-const loginStatusStore = useLoginStatusStore()
-const { isVisitor } = storeToRefs(loginStatusStore)
+const { isVisitor } = storeToRefs(useLoginStatusStore())
+const { isLoading } = storeToRefs(useLoadingStatusStore())
 
 const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
@@ -94,6 +96,7 @@ const toShowTheForm = () => {
 }
 
 const sendMessage = async () => {
+  isLoading.value = true
   const data = {
     Title: titleToSend.value,
     Comment: commentToSend.value,
@@ -110,6 +113,7 @@ const sendMessage = async () => {
     emit('isSent')
     isShowed.value = false
     clear()
+    isLoading.value = false
   }
 }
 
