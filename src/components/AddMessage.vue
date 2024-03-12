@@ -1,7 +1,9 @@
 <template>
-
     <v-dialog v-model="isShowed" maxWidth="500px">
-      <v-card>
+      <v-card class="pa-3">
+        <v-card-title>
+          メッセージを作成します
+        </v-card-title>
         <v-form 
           ref="messageForm" 
           v-model="isValid" 

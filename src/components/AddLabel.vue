@@ -1,5 +1,8 @@
 <template>
-  <v-card  class="pa-4">
+  <v-card  class="pa-3">
+    <v-card-title>
+      ラベルを作成します
+    </v-card-title>
     <v-form
       ref="labelForm"
       v-model="isValid"
@@ -15,7 +18,7 @@
           :rules="[rules.requiredText,rules.countComment]"
         ></v-textarea>
       </v-card-text>
-      <v-row>
+      <v-row class="px-4">
         <v-col cols="4">
           <v-text-field
             variant="outlined"
