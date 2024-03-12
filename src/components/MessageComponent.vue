@@ -22,7 +22,10 @@
     <v-container>
       <v-row class="text-center">
         <v-col>
-          <message-iframe :url="props.url"/>
+          <message-iframe 
+            :url="props.url"
+            :timeNow="timeNow"
+          />
         </v-col>
         <v-col>
           <message-comment>
@@ -31,7 +34,12 @@
         </v-col>
       </v-row>
       <v-row>
-        <message-labels :key="messageRenderKey" :message-id="props.messageId" @toReRender="messageRenderKey++"/>
+        <message-labels 
+          :key="messageRenderKey" 
+          :message-id="props.messageId" 
+          @toReRender="messageRenderKey++"
+          @toSeek="(jumpTime) => timeNow = jumpTime"
+        />
       </v-row>
     </v-container>
   </v-card>
@@ -58,6 +66,7 @@ const props = defineProps<{
 const iconUrl = ref<string>('')
 const isShowed = ref<boolean>(false)
 const messageRenderKey = ref<number>(0)
+const timeNow = ref<number>(0)
 
 onMounted(async () => {
   const res = await fetch(`https://q.trap.jp/api/v3/public/icon/${props.creatorName}`)

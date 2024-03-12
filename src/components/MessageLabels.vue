@@ -9,7 +9,9 @@
         :messageId="label.messageId"
         :content="label.content"
         :creatorName="label.creatorName"
+        :jumpTime="label.jumpTime"
         @toReRender="toReRender()"
+        @toSeek="(jumpTime) => toSeek(jumpTime)"
       />
     </v-slide-group-item>
       <v-card
@@ -48,7 +50,8 @@ onMounted(async () => {
     labels.value = await res.json()
 })
 
-const emit = defineEmits(['toReRender'])
+const emit = defineEmits(['toReRender', 'toSeek'])
 const toReRender = () => emit('toReRender')
+const toSeek = (jumpTime: number) => emit('toSeek', jumpTime)
 
 </script>

@@ -6,6 +6,7 @@
       height="100"
       width="150"
       v-show="isShowed"
+      @click="toSeek()"
     >
       <v-row class="ma-0">
         <v-col class="pa-0" cols="9">
@@ -56,6 +57,7 @@ const props = defineProps<{
     labelId: string
     messageId: string
     content: string
+    jumpTime: number
     creatorName: string
 }>()
 
@@ -66,7 +68,7 @@ onMounted(async () => {
     isShowed.value = true
 })
 
-const emit = defineEmits(['toReRender'])
+const emit = defineEmits(['toReRender', 'toSeek'])
 
 const toDelete = async () => {
     const res = await fetch(`/api/label/delete/${props.labelId}`,{
@@ -76,6 +78,8 @@ const toDelete = async () => {
       emit('toReRender')
     }
 }
+
+const toSeek = () => emit('toSeek', props.jumpTime)
 
 </script>
 
