@@ -15,6 +15,7 @@ declare module 'vue' {
     MessageComment: typeof import('./src/components/MessageComment.vue')['default']
     MessageComponent: typeof import('./src/components/MessageComponent.vue')['default']
     MessageContent: typeof import('./src/components/MessageContent.vue')['default']
+    MessageDeleteConfirm: typeof import('./src/components/MessageDeleteConfirm.vue')['default']
     MessageIfram: typeof import('./src/components/MessageIfram.vue')['default']
     MessageIframe: typeof import('./src/components/MessageIframe.vue')['default']
     MessageLabel: typeof import('./src/components/MessageLabel.vue')['default']

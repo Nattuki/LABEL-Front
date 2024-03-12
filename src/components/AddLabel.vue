@@ -58,7 +58,7 @@
           variant="plain"
           :ripple="false"
           color="blue"
-          :disbled="!isValid"
+          :disabled="!isValid"
         ></v-btn>
       </v-card-actions>
     </v-form>

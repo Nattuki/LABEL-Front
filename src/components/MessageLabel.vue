@@ -43,7 +43,7 @@
       </v-card-text>
     </v-card>
   </v-slide-y-reverse-transition>
-  <v-dialog v-model="confirming" width="500px">
+  <v-dialog v-model="confirming" maxWidth="250px">
     <label-delete-confirm 
       @toDelete="toDelete()"
       @cancel="confirming = false" 
