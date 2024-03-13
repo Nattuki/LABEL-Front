@@ -21,7 +21,7 @@
       <template v-slot:append>
         <v-btn @click="dialogIsShowed=true" v-if="isVisitor">
           <user-icon isVisitor />
-          LogIn
+            LogIn
           <v-dialog v-model="dialogIsShowed" maxWidth="250px">
             <confirm-modal 
               @confirm="moveToOAuth()" 
@@ -49,6 +49,12 @@
         <v-list-item prepend-icon="mdi-home" title="HOME" value="home" to="/"></v-list-item>
         <v-list-item prepend-icon="mdi-account" title="MYPAGE" value="mypage" to="/mypage"></v-list-item>
       </v-list>
+      <template v-slot:append>
+        <v-container class="d-flex align-center">
+          <img src="./assets/icon.svg" width="40px" height="40px" class="mr-3">
+          LABEL 1.0
+        </v-container>
+      </template>
     </v-navigation-drawer>
 
     <v-main>
