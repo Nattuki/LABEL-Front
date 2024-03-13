@@ -64,7 +64,15 @@
       <v-progress-linear indeterminate v-if="isLoading"></v-progress-linear>
       <v-container>
         <v-sheet min-height="20em">
-          <router-view />
+          <v-btn 
+            variant="plain" 
+            :ripple="false" 
+            :class="$style.reload"
+            @click="renderKey++"
+          >
+            <v-icon size="30px">mdi-reload</v-icon>
+          </v-btn>
+          <router-view :key="renderKey"/>
         </v-sheet>
       </v-container>
     </v-main>
@@ -86,6 +94,7 @@ const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const drawer = ref<boolean>(false)
 const dialogIsShowed = ref<boolean>(false)
+const renderKey = ref<number>(0)
 
 const moveToOAuth = async () => {
   const res = await fetch('/api/loginpath')
@@ -100,5 +109,13 @@ const logOut = async () => {
     window.location.reload()
   }
 }
-
 </script>
+
+<style lang="scss" module>
+.reload{
+  position: fixed;
+  top:80px;
+  right:50px;
+  z-index: 10;
+}
+</style>
