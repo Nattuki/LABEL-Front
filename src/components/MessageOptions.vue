@@ -7,11 +7,10 @@
       location="bottom"
     >
       <v-btn
-        v-if="!isVisitor"
         variant="flat"
         elevation="0"
         :ripple="false"
-        @click="addLabelDialog = true" 
+        @click="checkIfLogin()" 
         height="30"
       >
         ラベルを作成
@@ -46,6 +45,9 @@
     <v-dialog v-model="addLabelDialog" maxWidth="500px">
       <add-label @toReRender="toReRender()" @cancel="addLabelDialog = false" :messageId="props.messageId" />
     </v-dialog>
+    <v-dialog v-model="pleaseLogin" maxWidth="250px">
+      <remind-login-modal @close="pleaseLogin=false"/>
+    </v-dialog>
   </v-btn>
 </template>
 
@@ -72,6 +74,7 @@ const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 const addLabelDialog = ref<boolean>(false)
 const confirmDialog = ref<boolean>(false)
 const ableToDelete = computed(() => myName.value === props.creatorName)
+const pleaseLogin = ref<boolean>(false)
 
 const toDelete = async () => {
   const res = await fetch(`/api/message/delete/${props.messageId}`, {
@@ -99,4 +102,11 @@ const copyToClipBoard = async () => {
   snackBar.value = true
 }
 
+const checkIfLogin = () => {
+    if(isVisitor.value){
+        pleaseLogin.value = true
+    }else{
+        addLabelDialog.value = true
+    }
+}
 </script>
