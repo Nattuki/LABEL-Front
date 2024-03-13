@@ -57,7 +57,7 @@
       <remind-login-modal @close="pleaseLogin=false" />
     </v-dialog>
     <v-btn
-      elevation="3"
+      elevation="24"
       icon="mdi-plus"
       @click="toShowTheForm"
       :class="$style.addButton"
