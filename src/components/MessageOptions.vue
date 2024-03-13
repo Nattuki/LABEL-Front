@@ -7,6 +7,15 @@
       location="bottom"
     >
       <v-btn
+        variant="flat"
+        elevation="0"
+        :ripple="false"
+        @click="addLabelDialog = true" 
+        height="30"
+      >
+        ラベルを作成
+      </v-btn>
+      <v-btn
         elevation="0"
         variant="flat"
         :ripple="false"
@@ -20,18 +29,21 @@
         variant="flat"
         elevation="0"
         :ripple="false"
-        @click="dialogIsShowed = true" 
+        @click="addLabelDialog = true" 
         height="30"
       >
         削除
       </v-btn>
     </v-menu>
-    <v-dialog v-model="dialogIsShowed" maxWidth="300px">
+    <v-dialog v-model="confirmDialog" maxWidth="300px">
       <confirm-modal
         @confirm="toDelete()" 
-        @cancel="dialogIsShowed=false"
+        @cancel="confirmDialog=false"
         :text="'このメッセージを削除しますか'"
       />
+    </v-dialog>
+    <v-dialog v-model="addLabelDialog" maxWidth="500px">
+      <add-label @toReRender="toReRender()" @cancel="addLabelDialog = false" :messageId="props.messageId" />
     </v-dialog>
   </v-btn>
 </template>
@@ -40,6 +52,7 @@
 import { ref, computed } from 'vue'
 import { useRenderKeyStore } from '@/store/renderKey'
 import { storeToRefs } from 'pinia'
+import AddLabel from '@/components/AddLabel.vue'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { useSnackBarStore } from '@/store/snackbar'
 import ConfirmModal from '@/components/ConfirmModal.vue'
@@ -49,11 +62,14 @@ const props = defineProps<{
   messageId: string
 }>()
 
+const emit = defineEmits(['toReRender'])
+
 const { viewRenderKey } = storeToRefs(useRenderKeyStore())
 const { myName } = storeToRefs(useLoginStatusStore())
 const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
-const dialogIsShowed = ref<boolean>(false)
+const addLabelDialog = ref<boolean>(false)
+const confirmDialog = ref<boolean>(false)
 const ableToDelete = computed(() => myName.value === props.creatorName)
 
 const toDelete = async () => {
@@ -68,6 +84,11 @@ const toDelete = async () => {
     snackText.value = 'メッセージの削除は失敗しました'
     snackBar.value = true
   }
+}
+
+const toReRender = () => {
+  emit('toReRender')
+  addLabelDialog.value = false
 }
 
 const copyToClipBoard = async () => {

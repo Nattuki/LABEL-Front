@@ -20,6 +20,7 @@
         v-if="!disabledOption"
         :creatorName="props.creatorName" 
         :messageId="props.messageId"
+        @toReRender="messageRenderKey++"
       />
     </template>
     <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
