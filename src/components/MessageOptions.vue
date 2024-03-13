@@ -1,10 +1,27 @@
 <template>
-  <v-btn variant="plain" :ripple="false" >
+  <v-btn variant="plain" :ripple="false">
     <v-icon size="x-large">mdi-dots-horizontal</v-icon>
-    <v-menu activator="parent">
-      <v-btn 
+    <v-menu 
+      activator="parent" 
+      transition="scroll-y-transition" 
+      location="bottom"
+    >
+      <v-btn
+        elevation="0"
+        variant="tonal"
+        :ripple="false"
+        height="30"
+        @click="copyToClipBoard()"
+      >
+        リンクをコピー
+      </v-btn>
+      <v-btn
+        v-if="ableToDelete"
+        variant="tonal"
+        elevation="0"
+        :ripple="false"
         @click="dialogIsShowed = true" 
-        :disabled="!ableToDelete"
+        height="30"
       >
         削除
       </v-btn>
@@ -24,6 +41,7 @@ import { ref, computed } from 'vue'
 import { useRenderKeyStore } from '@/store/renderKey'
 import { storeToRefs } from 'pinia'
 import { useLoginStatusStore } from '@/store/loginStatus'
+import { useSnackBarStore } from '@/store/snackbar'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
 const props = defineProps<{
@@ -33,6 +51,7 @@ const props = defineProps<{
 
 const { viewRenderKey } = storeToRefs(useRenderKeyStore())
 const { myName } = storeToRefs(useLoginStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const dialogIsShowed = ref<boolean>(false)
 const ableToDelete = computed(() => myName.value === props.creatorName)
@@ -42,8 +61,20 @@ const toDelete = async () => {
       method: "DELETE", 
     })
   if(res.ok){
+    snackText.value = 'メッセージを削除しました'
+    snackBar.value = true
     viewRenderKey.value++
+  }else{
+    snackText.value = 'メッセージの削除は失敗しました'
+    snackBar.value = true
   }
+}
+
+const copyToClipBoard = async () => {
+  const text: string = `https://label.trap.show/message/${props.messageId}`
+  await navigator.clipboard.writeText(text)
+  snackText.value = 'リンクはコピーしました'
+  snackBar.value = true
 }
 
 </script>

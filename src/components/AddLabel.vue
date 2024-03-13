@@ -87,10 +87,12 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { useSnackBarStore } from '@/store/snackbar'
 import { useLoadingStatusStore } from '@/store/loadingstatus'
 import { storeToRefs } from 'pinia'
 
 const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 const isValid = ref<boolean>(false)
 const contentToSend = ref<string>()
 const hourToSend =ref<number>(0)
@@ -133,7 +135,12 @@ const sendLabel = async () => {
   })
   isLoading.value = false
   if(res.ok){
+    snackText.value = 'ラベルを作成しました'
+    snackBar.value = true
     emit('toReRender')
+  }else{
+    snackText.value = 'ラベルの作成は失敗しました'
+    snackBar.value = true
   }
 }
 </script>

@@ -58,6 +58,9 @@
     </v-navigation-drawer>
 
     <v-main>
+      <v-snackbar v-model="snackBar" :timeout=1500 location="bottom">
+        {{ snackText }}
+      </v-snackbar>
       <v-progress-linear indeterminate v-if="isLoading"></v-progress-linear>
       <v-container>
         <v-sheet min-height="20em">
@@ -72,12 +75,14 @@
 import { ref } from 'vue'
 import { useLoginStatusStore } from './store/loginStatus'
 import { useLoadingStatusStore } from './store/loadingstatus'
+import { useSnackBarStore } from './store/snackbar'
 import { storeToRefs } from 'pinia'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import UserIcon from '@/components/UserIcon.vue'
 
 const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore())
 const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const drawer = ref<boolean>(false)
 const dialogIsShowed = ref<boolean>(false)

@@ -70,6 +70,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useSnackBarStore } from '@/store/snackbar'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { useLoadingStatusStore } from '@/store/loadingstatus'
 import { storeToRefs } from 'pinia'
@@ -77,6 +78,7 @@ import RemindLoginModal from '@/components/RemindLoginModal.vue'
 
 const { isVisitor } = storeToRefs(useLoginStatusStore())
 const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const isValid = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
@@ -111,9 +113,14 @@ const sendMessage = async () => {
   })
   isLoading.value = false
   if(res.ok){
+    snackText.value = 'メッセージを作成しました'
+    snackBar.value = true
     emit('isSent')
     isShowed.value = false
     clear()
+  }else{
+    snackText.value = 'メッセージを作成しました'
+    snackBar.value = true
   }
 }
 

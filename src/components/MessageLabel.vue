@@ -57,13 +57,16 @@
 import { ref, onMounted, computed } from 'vue'
 import { useLoginStatusStore } from '@/store/loginStatus'
 import { storeToRefs } from 'pinia'
+import { useSnackBarStore } from '@/store/snackbar'
 import ConfirmModal from '@/components/ConfirmModal.vue'
+
 
 
 const iconUrl = ref<string>('')
 const confirming = ref<boolean>(false)
 const isShowed = ref<boolean>(false)
 const { myName } = storeToRefs(useLoginStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const props = defineProps<{
     labelId: string
@@ -88,7 +91,12 @@ const toDelete = async () => {
         method: 'DELETE'
     })
     if(res.ok){
+      snackText.value = 'ラベルを削除しました'
+      snackBar.value = true
       emit('toReRender')
+    }else{
+      snackText.value = 'ラベルの削除は失敗しました'
+      snackBar.value = true
     }
 }
 
