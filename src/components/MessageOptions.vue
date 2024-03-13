@@ -7,6 +7,7 @@
       location="bottom"
     >
       <v-btn
+        v-if="!isVisitor"
         variant="flat"
         elevation="0"
         :ripple="false"
@@ -65,7 +66,7 @@ const props = defineProps<{
 const emit = defineEmits(['toReRender'])
 
 const { viewRenderKey } = storeToRefs(useRenderKeyStore())
-const { myName } = storeToRefs(useLoginStatusStore())
+const { myName, isVisitor } = storeToRefs(useLoginStatusStore())
 const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const addLabelDialog = ref<boolean>(false)
