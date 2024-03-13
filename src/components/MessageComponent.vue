@@ -16,7 +16,11 @@
       </v-tooltip>
     </template>
     <template v-slot:append>
-      <message-options :creatorName="props.creatorName" :messageId="props.messageId" />
+      <message-options
+        v-if="!disabledOption"
+        :creatorName="props.creatorName" 
+        :messageId="props.messageId" 
+      />
     </template>
     <v-divider  thickness="2" class="mx-3 border-opacity-25"></v-divider>
     <v-container>
@@ -54,14 +58,19 @@ import MessageOptions from './MessageOptions.vue';
 import UserIcon from './UserIcon.vue';
 import { ref, onMounted } from 'vue';
 
-const props = defineProps<{
+
+
+const props = withDefaults(defineProps<{
   messageId: string
   creatorName: string
   title: string
   comment: string
   url: string
   createdOn: string
-}>()
+  disabledOption?: boolean
+}>(),{
+  disabledOption: false
+})
 
 const iconUrl = ref<string>('')
 const isShowed = ref<boolean>(false)
