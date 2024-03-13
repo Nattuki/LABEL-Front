@@ -147,7 +147,7 @@ const convertToEmbedUrl = (url: string): string => {
 <style lang="scss" module>
 .addButton{
   position: fixed;
-  left: 93%;
+  left: 90%;
   top:90%;
   transform: translateX(-50%)
              translateY(-50%);

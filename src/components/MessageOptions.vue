@@ -8,7 +8,7 @@
     >
       <v-btn
         elevation="0"
-        variant="tonal"
+        variant="flat"
         :ripple="false"
         height="30"
         @click="copyToClipBoard()"
@@ -17,7 +17,7 @@
       </v-btn>
       <v-btn
         v-if="ableToDelete"
-        variant="tonal"
+        variant="flat"
         elevation="0"
         :ripple="false"
         @click="dialogIsShowed = true" 

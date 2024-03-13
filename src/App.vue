@@ -8,16 +8,16 @@
           :ripple="false"
         >
         </v-app-bar-nav-icon>
-        <img src="./assets/icon.svg" width="50px" height="50px">        
-        <v-btn to="/" :ripple="false" variant="plain">
-          HOME
-        </v-btn>
-
-        <v-btn to="/mypage" :ripple="false" variant="plain">
-          mypage
-        </v-btn>
+        <img src="./assets/icon.svg" width="50px" height="50px">   
+        <div v-if="!isMobile">     
+          <v-btn to="/" :ripple="false" variant="plain">
+            HOME
+          </v-btn>
+          <v-btn to="/mypage" :ripple="false" variant="plain">
+            mypage
+          </v-btn>
+        </div>
       </template>
-
       <template v-slot:append>
         <v-btn @click="dialogIsShowed=true" v-if="isVisitor">
           <user-icon isVisitor />
@@ -85,12 +85,14 @@ import { useLoginStatusStore } from './store/loginStatus'
 import { useLoadingStatusStore } from './store/loadingstatus'
 import { useSnackBarStore } from './store/snackbar'
 import { storeToRefs } from 'pinia'
+import { useWindow } from './composables/useWindow'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import UserIcon from '@/components/UserIcon.vue'
 
 const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore())
 const { isLoading } = storeToRefs(useLoadingStatusStore())
 const { snackBar, snackText } = storeToRefs(useSnackBarStore())
+const { isMobile } = useWindow()
 
 const drawer = ref<boolean>(false)
 const dialogIsShowed = ref<boolean>(false)
@@ -113,7 +115,7 @@ const logOut = async () => {
 
 <style lang="scss" module>
 .reload{
-  position: fixed;
+  position: absolute;
   top:80px;
   right:50px;
   z-index: 10;

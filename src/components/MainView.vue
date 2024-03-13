@@ -19,8 +19,6 @@
 <script lang="ts" setup>
 import MessagesView from './MessagesView.vue'
 import { ref, onMounted, watch } from 'vue'
-import { useSnackBarStore } from '@/store/snackbar'
-import { storeToRefs } from 'pinia';
 
 const props = withDefaults(defineProps<{
     userName?: string
@@ -28,16 +26,10 @@ const props = withDefaults(defineProps<{
     userName: ''
 })
 
-const { snackBar, snackText } = storeToRefs(useSnackBarStore())
-
 const pageNow = ref<number>(1)
 const pages = ref<number>(1)
 
-onMounted(() => {
-  updatePages()
-  snackText.value = '最新の情報を取得しました'
-  snackBar.value = true
-})
+onMounted(() => updatePages())
 watch(pageNow, () => updatePages())
 
 const updatePages = async () => {
@@ -46,5 +38,4 @@ const updatePages = async () => {
     pages.value = (await res.json()).count
   }
 }
-
 </script>

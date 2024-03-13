@@ -1,13 +1,19 @@
 <template>
-  <v-container>
-    <v-row 
-      style="height:198px;" 
-      justify="center" 
-      align-content="center"
-    >
-      <v-card variant="flat" width="350px" class="text-h6 text-left">
-       <slot></slot>
-      </v-card>
-    </v-row>
-  </v-container>
+  <v-sheet 
+    :height=height
+    class="d-flex justify-center align-center px-6"
+  >
+    <v-card variant="flat" width="350px" class="text-h6 text-left">
+      <slot></slot>
+    </v-card>
+  </v-sheet>
 </template>
+
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useWindow } from '@/composables/useWindow'
+
+const { isMobile } = useWindow()
+const height = computed(() => isMobile.value ? 160 : 198)
+
+</script>
