@@ -29,7 +29,7 @@
         variant="flat"
         elevation="0"
         :ripple="false"
-        @click="addLabelDialog = true" 
+        @click="confirmDialog = true" 
         height="30"
       >
         削除
