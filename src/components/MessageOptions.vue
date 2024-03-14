@@ -77,7 +77,7 @@ const ableToDelete = computed(() => myName.value === props.creatorName)
 const pleaseLogin = ref<boolean>(false)
 
 const toDelete = async () => {
-  const res = await fetch(`/api/message/delete/${props.messageId}`, {
+  const res = await fetch(`/api/message/${props.messageId}`, {
       method: "DELETE", 
     })
   if(res.ok){

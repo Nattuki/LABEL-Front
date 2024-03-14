@@ -87,7 +87,7 @@ onMounted(async () => {
 const emit = defineEmits(['toReRender', 'toSeek'])
 
 const toDelete = async () => {
-    const res = await fetch(`/api/label/delete/${props.labelId}`,{
+    const res = await fetch(`/api/label/${props.labelId}`,{
         method: 'DELETE'
     })
     if(res.ok){
