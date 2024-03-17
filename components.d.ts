@@ -18,7 +18,7 @@ declare module 'vue' {
     MessageContent: typeof import('./src/components/MessageContent.vue')['default']
     MessageDeleteConfirm: typeof import('./src/components/MessageDeleteConfirm.vue')['default']
     MessageIfram: typeof import('./src/components/MessageIfram.vue')['default']
-    MessageIframe: typeof import('./src/components/MessageIframe.vue')['default']
+    MessageIframe: typeof import('./src/components/YouTubeIframe.vue')['default']
     MessageLabel: typeof import('./src/components/MessageLabel.vue')['default']
     MessageLabels: typeof import('./src/components/MessageLabels.vue')['default']
     MessageOptions: typeof import('./src/components/MessageOptions.vue')['default']
@@ -30,5 +30,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     UserIcon: typeof import('./src/components/UserIcon.vue')['default']
     UserIconButton: typeof import('./src/components/UserIconButton.vue')['default']
+    YouTubeIframe: typeof import('./src/components/YouTubeIframe.vue')['default']
   }
 }

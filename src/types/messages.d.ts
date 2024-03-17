@@ -16,3 +16,5 @@ export type Label = {
     creatorName: string
     createdOn: string
 }
+
+export type UrlType = 'YouTube' | 'Spotify'

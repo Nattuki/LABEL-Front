@@ -27,7 +27,7 @@
     <v-container>
       <v-row class="text-center">
         <v-col>
-          <message-iframe 
+          <you-tube-iframe 
             :url="props.url"
             :timeNow="timeNow"
           />
@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import MessageIframe from './MessageIframe.vue';
+import YouTubeIframe from './YouTubeIframe.vue';
 import MessageLabels from './MessageLabels.vue';
 import MessageComment from './MessageComment.vue';
 import MessageOptions from './MessageOptions.vue';
@@ -85,4 +85,4 @@ onMounted(async () => {
   isShowed.value = true
 })
 
-</script>
+</script>./YouTubeIframe.vue
