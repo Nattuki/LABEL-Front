@@ -28,6 +28,7 @@ declare module 'vue' {
     RemindLoginModal: typeof import('./src/components/RemindLoginModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SpotifyIframe: typeof import('./src/components/SpotifyIframe.vue')['default']
     UserIcon: typeof import('./src/components/UserIcon.vue')['default']
     UserIconButton: typeof import('./src/components/UserIconButton.vue')['default']
     YouTubeIframe: typeof import('./src/components/YouTubeIframe.vue')['default']

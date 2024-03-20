@@ -30,6 +30,7 @@
           <you-tube-iframe 
             :url="props.url"
             :timeNow="timeNow"
+            ref="youtubeIframe"
           />
         </v-col>
         <v-col>
@@ -43,7 +44,7 @@
           :key="messageRenderKey" 
           :message-id="props.messageId" 
           @toReRender="messageRenderKey++"
-          @toSeek="(jumpTime) => timeNow = jumpTime"
+          @toSeek="(jumpTime: number) => toSeek(jumpTime)"
         />
       </v-row>
     </v-container>
@@ -59,8 +60,6 @@ import MessageOptions from './MessageOptions.vue';
 import UserIcon from './UserIcon.vue';
 import { ref, onMounted } from 'vue';
 
-
-
 const props = withDefaults(defineProps<{
   messageId: string
   creatorName: string
@@ -73,10 +72,11 @@ const props = withDefaults(defineProps<{
   disabledOption: false
 })
 
+const youtubeIframe = ref()
 const iconUrl = ref<string>('')
 const isShowed = ref<boolean>(false)
 const messageRenderKey = ref<number>(0)
-const timeNow = ref<number>(0)
+const timeNow = ref<number>(-1)
 
 onMounted(async () => {
   const res = await fetch(`https://q.trap.jp/api/v3/public/icon/${props.creatorName}`)
@@ -85,4 +85,8 @@ onMounted(async () => {
   isShowed.value = true
 })
 
-</script>./YouTubeIframe.vue
+const toSeek = (jumpTime: number) => {
+  youtubeIframe.value.seekTo(jumpTime)
+}
+
+</script>
