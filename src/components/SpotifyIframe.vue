@@ -4,8 +4,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import type { EmbedController, IframeAPI } from '@/types/SpotifyAPI'
+import { ref, onMounted } from 'vue'
+import { useIframeAPIStore } from '@/store/iframeAPI'
+import type { EmbedController } from '@/types/SpotifyAPI'
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
     url: string
@@ -13,16 +15,10 @@ const props = defineProps<{
     height: number
 }>()
 
+const { iframeAPI }  = storeToRefs(useIframeAPIStore())
 const timeNow = ref<number>(0)
 
 onMounted(() => {
-    const script1 = document.createElement('script');
-    script1.src = 'https://open.spotify.com/embed/iframe-api/v1';
-    script1.async = true;
-    document.body.appendChild(script1);
-})
-
-window.onSpotifyIframeApiReady = (API: IframeAPI) => {
     const element = document.getElementById('embed-iframe') as Element
     const options = {
         width: props.width,
@@ -34,8 +30,9 @@ window.onSpotifyIframeApiReady = (API: IframeAPI) => {
             EmbedController.seek(timeNow.value)
         })
     };
-    API.createController(element, options, callback)
-}
+    iframeAPI.value.createController(element, options, callback)
+})
+
 
 const seek = new Event('seek')
 const seekTo = (timeToSeek: number) => {

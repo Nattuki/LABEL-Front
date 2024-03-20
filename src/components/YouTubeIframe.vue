@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useWindow } from '@/composables/useWindow';
 import { ref, computed } from 'vue'
 
 const props = defineProps<{

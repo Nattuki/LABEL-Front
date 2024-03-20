@@ -80,15 +80,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useLoginStatusStore } from './store/loginStatus'
 import { useLoadingStatusStore } from './store/loadingstatus'
 import { useSnackBarStore } from './store/snackbar'
+import { useIframeAPIStore } from './store/iframeAPI'
 import { storeToRefs } from 'pinia'
 import { useWindow } from './composables/useWindow'
+import type { IframeAPI } from './types/SpotifyAPI'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import UserIcon from '@/components/UserIcon.vue'
 
+const IframeAPIStore  = useIframeAPIStore()
 const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore())
 const { isLoading } = storeToRefs(useLoadingStatusStore())
 const { snackBar, snackText } = storeToRefs(useSnackBarStore())
@@ -111,6 +114,18 @@ const logOut = async () => {
     window.location.reload()
   }
 }
+
+onMounted(() => {
+  const spotifyAPIScript = document.createElement('script');
+  spotifyAPIScript.src = 'https://open.spotify.com/embed/iframe-api/v1';
+  spotifyAPIScript.async = true;
+  document.body.appendChild(spotifyAPIScript);
+
+  window.onSpotifyIframeApiReady = (API: IframeAPI) => {
+    IframeAPIStore.getIframeAPI(API)
+} 
+})
+
 </script>
 
 <style lang="scss" module>
