@@ -52,7 +52,7 @@
       <template v-slot:append>
         <v-container class="d-flex align-center">
           <img src="./assets/icon.svg" width="40px" height="40px" class="mr-3">
-          LABEL 1.0
+          LABEL 1.1
         </v-container>
       </template>
     </v-navigation-drawer>
