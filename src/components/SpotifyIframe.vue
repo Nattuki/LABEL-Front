@@ -1,15 +1,19 @@
 <template>
   <div id="embed-iframe"></div>
-  <btn id="seekbtn">seek</btn>
+  <div id="seek-handler"></div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { EmbedController, IframeAPI } from '@/types/SpotifyAPI'
 
 const props = defineProps<{
-    uri: string
+    url: string
+    width: number
+    height: number
 }>()
+
+const timeNow = ref<number>(0)
 
 onMounted(() => {
     const script1 = document.createElement('script');
@@ -19,15 +23,28 @@ onMounted(() => {
 })
 
 window.onSpotifyIframeApiReady = (API: IframeAPI) => {
-    const element = document.getElementById('embed-iframe') as Element;
+    const element = document.getElementById('embed-iframe') as Element
     const options = {
-    uri: 'https://open.spotify.com/intl-ja/track/7iRUZ43lqyaNOZsoUKI0SB'
-    };
-    const callback = (Controller: EmbedController) => {
-        (document.querySelector('#seekbtn') as Element).addEventListener('click',()=>{
-            Controller.seek(20)
+        width: props.width,
+        height: props.height,
+        uri: props.url,
+    }
+    const callback = (EmbedController: EmbedController) => {
+        (document.getElementById('seek-handler') as Element).addEventListener('seek',()=>{
+            EmbedController.seek(timeNow.value)
         })
     };
-    API.createController(element, options, callback);
-};
+    API.createController(element, options, callback)
+}
+
+const seek = new Event('seek')
+const seekTo = (timeToSeek: number) => {
+    timeNow.value = timeToSeek
+    const element = document.getElementById('seek-handler') as Element
+    element.dispatchEvent(seek)
+}
+
+defineExpose({
+   seekTo
+})
 </script>

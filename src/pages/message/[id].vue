@@ -6,6 +6,7 @@
     :title = message.title
     :comment = message.comment
     :url = message.url
+    :urlType="message.urlType"
     :createdOn = message.createdOn
     disabledOption
   />

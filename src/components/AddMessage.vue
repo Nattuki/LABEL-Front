@@ -116,9 +116,10 @@ watch(urlType, () => {
 const sendMessage = async () => {
   isLoading.value = true
   const data = {
-    Title: titleToSend.value,
-    Comment: commentToSend.value,
-    Url: convertToEmbedUrl(urlToSend.value)
+    title: titleToSend.value,
+    comment: commentToSend.value,
+    url: convertToEmbedUrl(urlToSend.value, urlType.value),
+    urlType: urlType.value
   }
   const res = await fetch('/api/message/send', {
     method: 'POST',
@@ -153,9 +154,13 @@ const clear = () => {
   urlToSend.value = ''
 }
 
-const convertToEmbedUrl = (url: string): string => {
-    const s = url.substring(32)
-    return 'https://www.youtube.com/embed/' + s
+const convertToEmbedUrl = (url: string, urlType: UrlType): string => {
+    if(urlType === 'Spotify'){
+      return url
+    }else{
+      const s = url.substring(32)
+      return 'https://www.youtube.com/embed/' + s
+    }
 }
 
 const isFormatted = (url: string, urlType: UrlType): boolean => {
@@ -163,7 +168,7 @@ const isFormatted = (url: string, urlType: UrlType): boolean => {
   if(urlType === 'YouTube'){
     re = RegExp('^https://www.youtube.com/watch[?]v=.+')
   }else{
-    re = RegExp('^https://www.spotify.com/.+')
+    re = RegExp('^https://open.spotify.com/.+')
   }
   return re.test(url)
 }

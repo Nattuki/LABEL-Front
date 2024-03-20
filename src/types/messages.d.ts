@@ -4,6 +4,7 @@ export type Message = {
     title: string
     comment: string
     url: string
+    urlType: UrlType
     createdOn: string
 }
 
