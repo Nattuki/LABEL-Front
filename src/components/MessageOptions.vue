@@ -60,10 +60,13 @@ import { useLoginStatusStore } from '@/store/loginStatus'
 import { useSnackBarStore } from '@/store/snackbar'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   creatorName: string
   messageId: string
-}>()
+  disabledOption?: boolean
+}>(),{
+  disabledOption: false
+})
 
 const emit = defineEmits(['toReRender'])
 
@@ -73,7 +76,7 @@ const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const addLabelDialog = ref<boolean>(false)
 const confirmDialog = ref<boolean>(false)
-const ableToDelete = computed(() => myName.value === props.creatorName)
+const ableToDelete = computed(() => (myName.value === props.creatorName)&&!props.disabledOption)
 const pleaseLogin = ref<boolean>(false)
 
 const toDelete = async () => {

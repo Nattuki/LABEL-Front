@@ -17,9 +17,9 @@
     </template>
     <template v-slot:append>
       <message-options
-        v-if="!disabledOption"
         :creatorName="props.creatorName" 
         :messageId="props.messageId"
+        :disabledOption = "props.disabledOption"
         @toReRender="messageRenderKey++"
       />
     </template>
