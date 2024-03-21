@@ -96,7 +96,7 @@ const toReRender = () => {
 }
 
 const copyToClipBoard = async () => {
-  const text: string = `https://label.trap.show/message/${props.messageId}`
+  const text: string = `https://label.trap.show/api/message/share/${props.messageId}`
   await navigator.clipboard.writeText(text)
   snackText.value = 'リンクはコピーしました'
   snackBar.value = true

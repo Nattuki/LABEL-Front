@@ -21,12 +21,19 @@ const props = defineProps<{
 }>()
 
 const embed = ref<HTMLIFrameElement | null>(null)
-const urlSrc = computed(() => props.url + "?enablejsapi=1")
+const urlSrc = computed(() => {
+  return convertToEmbedUrl(props.url) + "?enablejsapi=1"
+})
 
 const seekTo = (timeToSeek: number) => {
-    const timeToSeekArray: number[] = [timeToSeek]
-    const timeToSeekJSON = JSON.stringify(timeToSeekArray)
-    embed.value?.contentWindow?.postMessage(`{"event":"command","func":"seekTo","args":${timeToSeekJSON}}`, '*')
+  const timeToSeekArray: number[] = [timeToSeek]
+  const timeToSeekJSON = JSON.stringify(timeToSeekArray)
+  embed.value?.contentWindow?.postMessage(`{"event":"command","func":"seekTo","args":${timeToSeekJSON}}`, '*')
+}
+
+const convertToEmbedUrl = (url: string) => {
+  const s = url.substring(32)
+  return 'https://www.youtube.com/embed/' + s
 }
 
 defineExpose({

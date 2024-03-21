@@ -118,7 +118,7 @@ const sendMessage = async () => {
   const data = {
     title: titleToSend.value,
     comment: commentToSend.value,
-    url: convertToEmbedUrl(urlToSend.value, urlType.value),
+    url: urlToSend.value,
     urlType: urlType.value
   }
   const res = await fetch('/api/message/send', {
@@ -152,15 +152,6 @@ const clear = () => {
   titleToSend.value = ''
   commentToSend.value = ''
   urlToSend.value = ''
-}
-
-const convertToEmbedUrl = (url: string, urlType: UrlType): string => {
-    if(urlType === 'Spotify'){
-      return url
-    }else{
-      const s = url.substring(32)
-      return 'https://www.youtube.com/embed/' + s
-    }
 }
 
 const isFormatted = (url: string, urlType: UrlType): boolean => {
