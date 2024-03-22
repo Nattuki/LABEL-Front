@@ -56,69 +56,69 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import { useRenderKeyStore } from "@/store/renderKey";
-import { storeToRefs } from "pinia";
-import AddLabel from "@/components/AddLabel.vue";
-import { useLoginStatusStore } from "@/store/loginStatus";
-import { useSnackBarStore } from "@/store/snackbar";
-import ConfirmModal from "@/components/ConfirmModal.vue";
+import { ref, computed } from "vue"
+import { useRenderKeyStore } from "@/store/renderKey"
+import { storeToRefs } from "pinia"
+import AddLabel from "@/components/AddLabel.vue"
+import { useLoginStatusStore } from "@/store/loginStatus"
+import { useSnackBarStore } from "@/store/snackbar"
+import ConfirmModal from "@/components/ConfirmModal.vue"
 
 const props = withDefaults(
   defineProps<{
-    creatorName: string;
-    messageId: string;
-    disabledOption?: boolean;
+    creatorName: string
+    messageId: string
+    disabledOption?: boolean
   }>(),
   {
     disabledOption: false,
   },
-);
+)
 
-const emit = defineEmits(["toReRender"]);
+const emit = defineEmits(["toReRender"])
 
-const { viewRenderKey } = storeToRefs(useRenderKeyStore());
-const { myName, isVisitor } = storeToRefs(useLoginStatusStore());
-const { snackBar, snackText } = storeToRefs(useSnackBarStore());
+const { viewRenderKey } = storeToRefs(useRenderKeyStore())
+const { myName, isVisitor } = storeToRefs(useLoginStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
-const addLabelDialog = ref<boolean>(false);
-const confirmDialog = ref<boolean>(false);
+const addLabelDialog = ref<boolean>(false)
+const confirmDialog = ref<boolean>(false)
 const ableToDelete = computed(
   () => myName.value === props.creatorName && !props.disabledOption,
-);
-const pleaseLogin = ref<boolean>(false);
+)
+const pleaseLogin = ref<boolean>(false)
 
 const toDelete = async () => {
   const res = await fetch(`/api/message/${props.messageId}`, {
     method: "DELETE",
-  });
+  })
   if (res.ok) {
-    snackText.value = "メッセージを削除しました";
-    snackBar.value = true;
-    viewRenderKey.value++;
+    snackText.value = "メッセージを削除しました"
+    snackBar.value = true
+    viewRenderKey.value++
   } else {
-    snackText.value = "メッセージの削除は失敗しました";
-    snackBar.value = true;
+    snackText.value = "メッセージの削除は失敗しました"
+    snackBar.value = true
   }
-};
+}
 
 const toReRender = () => {
-  emit("toReRender");
-  addLabelDialog.value = false;
-};
+  emit("toReRender")
+  addLabelDialog.value = false
+}
 
 const copyToClipBoard = async () => {
-  const text: string = `https://label.trap.show/api/message/share/${props.messageId}`;
-  await navigator.clipboard.writeText(text);
-  snackText.value = "リンクはコピーしました";
-  snackBar.value = true;
-};
+  const text: string = `https://label.trap.show/api/message/share/${props.messageId}`
+  await navigator.clipboard.writeText(text)
+  snackText.value = "リンクはコピーしました"
+  snackBar.value = true
+}
 
 const checkIfLogin = () => {
   if (isVisitor.value) {
-    pleaseLogin.value = true;
+    pleaseLogin.value = true
   } else {
-    addLabelDialog.value = true;
+    addLabelDialog.value = true
   }
-};
+}
 </script>

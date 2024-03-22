@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-const emit = defineEmits(["cancel", "toDelete"]);
+const emit = defineEmits(["cancel", "toDelete"])
 
-const cancel = () => emit("cancel");
-const toDelete = () => emit("toDelete");
+const cancel = () => emit("cancel")
+const toDelete = () => emit("toDelete")
 </script>

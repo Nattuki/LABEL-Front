@@ -8,14 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from "vue"
 
 const props = withDefaults(
   defineProps<{
-    isVisitor?: boolean;
-    isBase64?: boolean;
-    iconSrc?: string;
-    size?: string;
+    isVisitor?: boolean
+    isBase64?: boolean
+    iconSrc?: string
+    size?: string
   }>(),
   {
     isVisitor: false,
@@ -23,15 +23,15 @@ const props = withDefaults(
     iconSrc: "",
     size: "35px",
   },
-);
+)
 
 const iconSrc = computed(() => {
   if (props.isBase64) {
-    return "data:image/png;base64," + props.iconSrc;
+    return "data:image/png;base64," + props.iconSrc
   } else {
-    return props.iconSrc;
+    return props.iconSrc
   }
-});
+})
 </script>
 
 <style lang="scss" module>

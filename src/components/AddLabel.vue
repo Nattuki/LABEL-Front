@@ -91,63 +91,63 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import { useSnackBarStore } from "@/store/snackbar";
-import { useLoadingStatusStore } from "@/store/loadingstatus";
-import { storeToRefs } from "pinia";
+import { ref, computed } from "vue"
+import { useSnackBarStore } from "@/store/snackbar"
+import { useLoadingStatusStore } from "@/store/loadingstatus"
+import { storeToRefs } from "pinia"
 
-const { isLoading } = storeToRefs(useLoadingStatusStore());
-const { snackBar, snackText } = storeToRefs(useSnackBarStore());
-const isValid = ref<boolean>(false);
-const contentToSend = ref<string>();
-const hourToSend = ref<number>(0);
-const minuteToSend = ref<number>(0);
-const secondToSend = ref<number>(0);
-const labelColor = ref<string>("cyan-lighten-3");
+const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
+const isValid = ref<boolean>(false)
+const contentToSend = ref<string>()
+const hourToSend = ref<number>(0)
+const minuteToSend = ref<number>(0)
+const secondToSend = ref<number>(0)
+const labelColor = ref<string>("cyan-lighten-3")
 
 const timeToSend = computed(
   () =>
     hourToSend.value * 3600 + minuteToSend.value * 60 + secondToSend.value * 1,
-);
+)
 
 const props = defineProps<{
-  messageId: string;
-}>();
+  messageId: string
+}>()
 
-const emit = defineEmits(["cancel", "toReRender"]);
+const emit = defineEmits(["cancel", "toReRender"])
 
-const cancel = () => emit("cancel");
+const cancel = () => emit("cancel")
 
 const rules = {
   requiredText: (value: string) => !!value || "入力内容が必要です",
   validNumber: (value: number) =>
     (!isNaN(value) && value >= 0) || "無効な数字です",
   countComment: (value: string) => value.length <= 30 || "文字数制限を超えます",
-};
+}
 
 const sendLabel = async () => {
-  isLoading.value = true;
+  isLoading.value = true
   const data = {
     messageId: props.messageId,
     content: contentToSend.value,
     jumpTime: timeToSend.value,
     labelColor: labelColor.value,
-  };
+  }
   const res = await fetch("/api/label/send", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
-  isLoading.value = false;
+  })
+  isLoading.value = false
   if (res.ok) {
-    snackText.value = "ラベルを作成しました";
-    snackBar.value = true;
-    emit("toReRender");
+    snackText.value = "ラベルを作成しました"
+    snackBar.value = true
+    emit("toReRender")
   } else {
-    snackText.value = "ラベルの作成は失敗しました";
-    snackBar.value = true;
+    snackText.value = "ラベルの作成は失敗しました"
+    snackBar.value = true
   }
-};
+}
 </script>

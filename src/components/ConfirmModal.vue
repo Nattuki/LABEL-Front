@@ -13,12 +13,12 @@
 </template>
 
 <script lang="ts" setup>
-const emit = defineEmits(["cancel", "confirm"]);
+const emit = defineEmits(["cancel", "confirm"])
 
 const props = defineProps<{
-  text: string;
-}>();
+  text: string
+}>()
 
-const cancel = () => emit("cancel");
-const confirm = () => emit("confirm");
+const cancel = () => emit("cancel")
+const confirm = () => emit("confirm")
 </script>

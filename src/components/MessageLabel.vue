@@ -51,60 +51,60 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
-import { useLoginStatusStore } from "@/store/loginStatus";
-import { storeToRefs } from "pinia";
-import { useSnackBarStore } from "@/store/snackbar";
-import ConfirmModal from "@/components/ConfirmModal.vue";
+import { ref, onMounted, computed } from "vue"
+import { useLoginStatusStore } from "@/store/loginStatus"
+import { storeToRefs } from "pinia"
+import { useSnackBarStore } from "@/store/snackbar"
+import ConfirmModal from "@/components/ConfirmModal.vue"
 
-const iconUrl = ref<string>("");
-const confirming = ref<boolean>(false);
-const isShowed = ref<boolean>(false);
-const { myName } = storeToRefs(useLoginStatusStore());
-const { snackBar, snackText } = storeToRefs(useSnackBarStore());
+const iconUrl = ref<string>("")
+const confirming = ref<boolean>(false)
+const isShowed = ref<boolean>(false)
+const { myName } = storeToRefs(useLoginStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
 const props = defineProps<{
-  labelId: string;
-  messageId: string;
-  content: string;
-  labelColor: string;
-  jumpTime: number;
-  creatorName: string;
-}>();
+  labelId: string
+  messageId: string
+  content: string
+  labelColor: string
+  jumpTime: number
+  creatorName: string
+}>()
 
 onMounted(async () => {
   const res = await fetch(
     `https://q.trap.jp/api/v3/public/icon/${props.creatorName}`,
-  );
-  const data = await res.blob();
-  iconUrl.value = window.URL.createObjectURL(data);
-  isShowed.value = true;
-});
+  )
+  const data = await res.blob()
+  iconUrl.value = window.URL.createObjectURL(data)
+  isShowed.value = true
+})
 
-const emit = defineEmits(["toReRender", "toSeek"]);
+const emit = defineEmits(["toReRender", "toSeek"])
 
 const toDelete = async () => {
   const res = await fetch(`/api/label/${props.labelId}`, {
     method: "DELETE",
-  });
+  })
   if (res.ok) {
-    snackText.value = "ラベルを削除しました";
-    snackBar.value = true;
-    emit("toReRender");
+    snackText.value = "ラベルを削除しました"
+    snackBar.value = true
+    emit("toReRender")
   } else {
-    snackText.value = "ラベルの削除は失敗しました";
-    snackBar.value = true;
+    snackText.value = "ラベルの削除は失敗しました"
+    snackBar.value = true
   }
-};
+}
 
-const toSeek = () => emit("toSeek", props.jumpTime);
+const toSeek = () => emit("toSeek", props.jumpTime)
 
 const timeToShow = computed(() => {
-  const s = props.jumpTime % 60;
-  const m = Math.floor(props.jumpTime / 60) % 60;
-  const t = Math.floor(props.jumpTime / 3600);
+  const s = props.jumpTime % 60
+  const m = Math.floor(props.jumpTime / 60) % 60
+  const t = Math.floor(props.jumpTime / 3600)
 
-  const ms = `0${m}`.slice(-2) + ":" + `0${s}`.slice(-2);
-  return t === 0 ? ms : `${t}:` + ms;
-});
+  const ms = `0${m}`.slice(-2) + ":" + `0${s}`.slice(-2)
+  return t === 0 ? ms : `${t}:` + ms
+})
 </script>

@@ -12,6 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-const emit = defineEmits(["close"]);
-const close = () => emit("close");
+const emit = defineEmits(["close"])
+const close = () => emit("close")
 </script>

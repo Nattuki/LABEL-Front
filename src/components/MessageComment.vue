@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useWindow } from "@/composables/useWindow";
+import { computed } from "vue"
+import { useWindow } from "@/composables/useWindow"
 
-const { isMobile } = useWindow();
-const height = computed(() => (isMobile.value ? 160 : 198));
+const { isMobile } = useWindow()
+const height = computed(() => (isMobile.value ? 160 : 198))
 </script>

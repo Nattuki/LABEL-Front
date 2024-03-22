@@ -91,51 +91,51 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { useLoginStatusStore } from "./store/loginStatus";
-import { useLoadingStatusStore } from "./store/loadingstatus";
-import { useSnackBarStore } from "./store/snackbar";
-import { useIframeAPIStore } from "./store/iframeAPI";
-import { storeToRefs } from "pinia";
-import { useWindow } from "./composables/useWindow";
-import type { IframeAPI } from "./types/SpotifyAPI";
-import ConfirmModal from "@/components/ConfirmModal.vue";
-import UserIcon from "@/components/UserIcon.vue";
+import { ref, onMounted } from "vue"
+import { useLoginStatusStore } from "./store/loginStatus"
+import { useLoadingStatusStore } from "./store/loadingstatus"
+import { useSnackBarStore } from "./store/snackbar"
+import { useIframeAPIStore } from "./store/iframeAPI"
+import { storeToRefs } from "pinia"
+import { useWindow } from "./composables/useWindow"
+import type { IframeAPI } from "./types/SpotifyAPI"
+import ConfirmModal from "@/components/ConfirmModal.vue"
+import UserIcon from "@/components/UserIcon.vue"
 
-const IframeAPIStore = useIframeAPIStore();
-const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore());
-const { isLoading } = storeToRefs(useLoadingStatusStore());
-const { snackBar, snackText } = storeToRefs(useSnackBarStore());
-const { isMobile } = useWindow();
+const IframeAPIStore = useIframeAPIStore()
+const { isVisitor, myIconBase64 } = storeToRefs(useLoginStatusStore())
+const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
+const { isMobile } = useWindow()
 
-const drawer = ref<boolean>(false);
-const dialogIsShowed = ref<boolean>(false);
-const renderKey = ref<number>(0);
+const drawer = ref<boolean>(false)
+const dialogIsShowed = ref<boolean>(false)
+const renderKey = ref<number>(0)
 
 const moveToOAuth = async () => {
-  const res = await fetch("/api/loginpath");
+  const res = await fetch("/api/loginpath")
   if (res.ok) {
-    window.location.href = await res.text();
+    window.location.href = await res.text()
   }
-};
+}
 
 const logOut = async () => {
-  const res = await fetch("/api/logout", { method: "DELETE" });
+  const res = await fetch("/api/logout", { method: "DELETE" })
   if (res.ok) {
-    window.location.reload();
+    window.location.reload()
   }
-};
+}
 
 onMounted(() => {
-  const spotifyAPIScript = document.createElement("script");
-  spotifyAPIScript.src = "https://open.spotify.com/embed/iframe-api/v1";
-  spotifyAPIScript.async = true;
-  document.body.appendChild(spotifyAPIScript);
+  const spotifyAPIScript = document.createElement("script")
+  spotifyAPIScript.src = "https://open.spotify.com/embed/iframe-api/v1"
+  spotifyAPIScript.async = true
+  document.body.appendChild(spotifyAPIScript)
 
   window.onSpotifyIframeApiReady = (API: IframeAPI) => {
-    IframeAPIStore.getIframeAPI(API);
-  };
-});
+    IframeAPIStore.getIframeAPI(API)
+  }
+})
 </script>
 
 <style lang="scss" module>

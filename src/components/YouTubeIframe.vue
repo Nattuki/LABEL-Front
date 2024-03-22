@@ -12,34 +12,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed } from "vue"
 
 const props = defineProps<{
-  url: string;
-  width: number;
-  height: number;
-}>();
+  url: string
+  width: number
+  height: number
+}>()
 
-const embed = ref<HTMLIFrameElement | null>(null);
+const embed = ref<HTMLIFrameElement | null>(null)
 const urlSrc = computed(() => {
-  return convertToEmbedUrl(props.url) + "?enablejsapi=1";
-});
+  return convertToEmbedUrl(props.url) + "?enablejsapi=1"
+})
 
 const seekTo = (timeToSeek: number) => {
-  const timeToSeekArray: number[] = [timeToSeek];
-  const timeToSeekJSON = JSON.stringify(timeToSeekArray);
+  const timeToSeekArray: number[] = [timeToSeek]
+  const timeToSeekJSON = JSON.stringify(timeToSeekArray)
   embed.value?.contentWindow?.postMessage(
     `{"event":"command","func":"seekTo","args":${timeToSeekJSON}}`,
     "*",
-  );
-};
+  )
+}
 
 const convertToEmbedUrl = (url: string) => {
-  const s = url.substring(32);
-  return "https://www.youtube.com/embed/" + s;
-};
+  const s = url.substring(32)
+  return "https://www.youtube.com/embed/" + s
+}
 
 defineExpose({
   seekTo,
-});
+})
 </script>

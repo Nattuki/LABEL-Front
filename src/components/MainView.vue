@@ -14,28 +14,28 @@
 </template>
 
 <script lang="ts" setup>
-import MessagesView from "./MessagesView.vue";
-import { ref, onMounted, watch } from "vue";
+import MessagesView from "./MessagesView.vue"
+import { ref, onMounted, watch } from "vue"
 
 const props = withDefaults(
   defineProps<{
-    userName?: string;
+    userName?: string
   }>(),
   {
     userName: "",
   },
-);
+)
 
-const pageNow = ref<number>(1);
-const pages = ref<number>(1);
+const pageNow = ref<number>(1)
+const pages = ref<number>(1)
 
-onMounted(() => updatePages());
-watch(pageNow, () => updatePages());
+onMounted(() => updatePages())
+watch(pageNow, () => updatePages())
 
 const updatePages = async () => {
-  const res = await fetch(`/api/message/countPages?name=${props.userName}`);
+  const res = await fetch(`/api/message/countPages?name=${props.userName}`)
   if (res.ok) {
-    pages.value = (await res.json()).count;
+    pages.value = (await res.json()).count
   }
-};
+}
 </script>

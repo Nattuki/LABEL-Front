@@ -57,51 +57,51 @@
 </template>
 
 <script lang="ts" setup>
-import YouTubeIframe from "./YouTubeIframe.vue";
-import SpotifyIframe from "./SpotifyIframe.vue";
-import MessageLabels from "./MessageLabels.vue";
-import MessageComment from "./MessageComment.vue";
-import MessageOptions from "./MessageOptions.vue";
-import UserIcon from "./UserIcon.vue";
-import { useWindow } from "@/composables/useWindow";
-import { ref, computed, onMounted } from "vue";
-import type { UrlType } from "@/types/messages";
+import YouTubeIframe from "./YouTubeIframe.vue"
+import SpotifyIframe from "./SpotifyIframe.vue"
+import MessageLabels from "./MessageLabels.vue"
+import MessageComment from "./MessageComment.vue"
+import MessageOptions from "./MessageOptions.vue"
+import UserIcon from "./UserIcon.vue"
+import { useWindow } from "@/composables/useWindow"
+import { ref, computed, onMounted } from "vue"
+import type { UrlType } from "@/types/messages"
 
 const props = withDefaults(
   defineProps<{
-    messageId: string;
-    creatorName: string;
-    title: string;
-    comment: string;
-    url: string;
-    urlType: UrlType;
-    createdOn: string;
-    disabledOption?: boolean;
+    messageId: string
+    creatorName: string
+    title: string
+    comment: string
+    url: string
+    urlType: UrlType
+    createdOn: string
+    disabledOption?: boolean
   }>(),
   {
     disabledOption: false,
   },
-);
+)
 
-const iframe = ref();
-const iconUrl = ref<string>("");
-const isShowed = ref<boolean>(false);
-const messageRenderKey = ref<number>(0);
-const { isMobile } = useWindow();
+const iframe = ref()
+const iconUrl = ref<string>("")
+const isShowed = ref<boolean>(false)
+const messageRenderKey = ref<number>(0)
+const { isMobile } = useWindow()
 
-const iFrameWidth = computed(() => (isMobile.value ? 288 : 352));
-const iFrameHeight = computed(() => (isMobile.value ? 162 : 198));
+const iFrameWidth = computed(() => (isMobile.value ? 288 : 352))
+const iFrameHeight = computed(() => (isMobile.value ? 162 : 198))
 
 onMounted(async () => {
   const res = await fetch(
     `https://q.trap.jp/api/v3/public/icon/${props.creatorName}`,
-  );
-  const data = await res.blob();
-  iconUrl.value = window.URL.createObjectURL(data);
-  isShowed.value = true;
-});
+  )
+  const data = await res.blob()
+  iconUrl.value = window.URL.createObjectURL(data)
+  isShowed.value = true
+})
 
 const toSeek = (jumpTime: number) => {
-  iframe.value.seekTo(jumpTime);
-};
+  iframe.value.seekTo(jumpTime)
+}
 </script>

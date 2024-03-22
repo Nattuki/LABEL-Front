@@ -72,67 +72,67 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import { useSnackBarStore } from "@/store/snackbar";
-import { useLoginStatusStore } from "@/store/loginStatus";
-import { useLoadingStatusStore } from "@/store/loadingstatus";
-import { storeToRefs } from "pinia";
-import RemindLoginModal from "@/components/RemindLoginModal.vue";
-import type { UrlType } from "@/types/messages";
+import { ref, watch } from "vue"
+import { useSnackBarStore } from "@/store/snackbar"
+import { useLoginStatusStore } from "@/store/loginStatus"
+import { useLoadingStatusStore } from "@/store/loadingstatus"
+import { storeToRefs } from "pinia"
+import RemindLoginModal from "@/components/RemindLoginModal.vue"
+import type { UrlType } from "@/types/messages"
 
-const { isVisitor } = storeToRefs(useLoginStatusStore());
-const { isLoading } = storeToRefs(useLoadingStatusStore());
-const { snackBar, snackText } = storeToRefs(useSnackBarStore());
+const { isVisitor } = storeToRefs(useLoginStatusStore())
+const { isLoading } = storeToRefs(useLoadingStatusStore())
+const { snackBar, snackText } = storeToRefs(useSnackBarStore())
 
-const isValid = ref<boolean>(false);
-const isShowed = ref<boolean>(false);
-const pleaseLogin = ref<boolean>(false);
-const urlType = ref<UrlType>("YouTube");
-const urlToSend = ref<string>("");
-const titleToSend = ref<string>("");
-const commentToSend = ref<string>("");
+const isValid = ref<boolean>(false)
+const isShowed = ref<boolean>(false)
+const pleaseLogin = ref<boolean>(false)
+const urlType = ref<UrlType>("YouTube")
+const urlToSend = ref<string>("")
+const titleToSend = ref<string>("")
+const commentToSend = ref<string>("")
 
-const emit = defineEmits(["isSent"]);
+const emit = defineEmits(["isSent"])
 
 const toShowTheForm = () => {
   if (isVisitor.value) {
-    pleaseLogin.value = true;
+    pleaseLogin.value = true
   } else {
-    isShowed.value = true;
+    isShowed.value = true
   }
-};
+}
 
 watch(urlType, () => {
-  urlToSend.value = "";
-});
+  urlToSend.value = ""
+})
 
 const sendMessage = async () => {
-  isLoading.value = true;
+  isLoading.value = true
   const data = {
     title: titleToSend.value,
     comment: commentToSend.value,
     url: urlToSend.value,
     urlType: urlType.value,
-  };
+  }
   const res = await fetch("/api/message/send", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
-  isLoading.value = false;
+  })
+  isLoading.value = false
   if (res.ok) {
-    snackText.value = "メッセージを作成しました";
-    snackBar.value = true;
-    emit("isSent");
-    isShowed.value = false;
-    clear();
+    snackText.value = "メッセージを作成しました"
+    snackBar.value = true
+    emit("isSent")
+    isShowed.value = false
+    clear()
   } else {
-    snackText.value = "メッセージを作成しました";
-    snackBar.value = true;
+    snackText.value = "メッセージを作成しました"
+    snackBar.value = true
   }
-};
+}
 
 const rules = {
   required: (value: string) => !!value || "入力内容が必要です",
@@ -140,23 +140,23 @@ const rules = {
   countComment: (value: string) => value.length <= 50 || "文字数制限を超えます",
   formatted: (value: string) =>
     isFormatted(value, urlType.value) || "正しくないurl形式",
-};
+}
 
 const clear = () => {
-  titleToSend.value = "";
-  commentToSend.value = "";
-  urlToSend.value = "";
-};
+  titleToSend.value = ""
+  commentToSend.value = ""
+  urlToSend.value = ""
+}
 
 const isFormatted = (url: string, urlType: UrlType): boolean => {
-  var re: RegExp;
+  var re: RegExp
   if (urlType === "YouTube") {
-    re = RegExp("^https://www.youtube.com/watch[?]v=.+");
+    re = RegExp("^https://www.youtube.com/watch[?]v=.+")
   } else {
-    re = RegExp("^https://open.spotify.com/.+");
+    re = RegExp("^https://open.spotify.com/.+")
   }
-  return re.test(url);
-};
+  return re.test(url)
+}
 </script>
 
 <style lang="scss" module>
