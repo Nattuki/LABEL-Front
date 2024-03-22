@@ -26,20 +26,20 @@ onMounted(() => {
     uri: props.url,
   }
   const callback = (EmbedController: EmbedController) => {
-    (document.getElementById("seek-handler") as Element).addEventListener(
+    document.getElementById("seek-handler")!.addEventListener(
       "seek",
       () => {
         EmbedController.seek(timeNow.value)
       },
     )
   }
-  iframeAPI.value.createController(element, options, callback)
+  iframeAPI.value!.createController(element, options, callback)
 })
 
 const seek = new Event("seek")
 const seekTo = (timeToSeek: number) => {
   timeNow.value = timeToSeek
-  const element = document.getElementById("seek-handler") as Element
+  const element = document.getElementById("seek-handler")!
   element.dispatchEvent(seek)
 }
 
