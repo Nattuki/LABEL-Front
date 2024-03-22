@@ -5,10 +5,7 @@
       <v-row justify="center">
         <v-col cols="8">
           <v-container class="max-width">
-            <v-pagination
-              v-model="pageNow"
-              :length="pages"
-            ></v-pagination>
+            <v-pagination v-model="pageNow" :length="pages"></v-pagination>
           </v-container>
         </v-col>
       </v-row>
@@ -17,25 +14,28 @@
 </template>
 
 <script lang="ts" setup>
-import MessagesView from './MessagesView.vue'
-import { ref, onMounted, watch } from 'vue'
+import MessagesView from "./MessagesView.vue";
+import { ref, onMounted, watch } from "vue";
 
-const props = withDefaults(defineProps<{
-    userName?: string
-}>(),{
-    userName: ''
-})
+const props = withDefaults(
+  defineProps<{
+    userName?: string;
+  }>(),
+  {
+    userName: "",
+  },
+);
 
-const pageNow = ref<number>(1)
-const pages = ref<number>(1)
+const pageNow = ref<number>(1);
+const pages = ref<number>(1);
 
-onMounted(() => updatePages())
-watch(pageNow, () => updatePages())
+onMounted(() => updatePages());
+watch(pageNow, () => updatePages());
 
 const updatePages = async () => {
-  const res = await fetch(`/api/message/countPages?name=${props.userName}`)
-  if(res.ok){
-    pages.value = (await res.json()).count
+  const res = await fetch(`/api/message/countPages?name=${props.userName}`);
+  if (res.ok) {
+    pages.value = (await res.json()).count;
   }
-}
+};
 </script>

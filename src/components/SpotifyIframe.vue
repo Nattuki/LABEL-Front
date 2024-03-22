@@ -4,44 +4,46 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import { useIframeAPIStore } from '@/store/iframeAPI'
-import type { EmbedController } from '@/types/SpotifyAPI'
-import { storeToRefs } from 'pinia';
+import { ref, onMounted } from "vue";
+import { useIframeAPIStore } from "@/store/iframeAPI";
+import type { EmbedController } from "@/types/SpotifyAPI";
+import { storeToRefs } from "pinia";
 
 const props = defineProps<{
-    url: string
-    width: number
-    height: number
-}>()
+  url: string;
+  width: number;
+  height: number;
+}>();
 
-const { iframeAPI }  = storeToRefs(useIframeAPIStore())
-const timeNow = ref<number>(0)
+const { iframeAPI } = storeToRefs(useIframeAPIStore());
+const timeNow = ref<number>(0);
 
 onMounted(() => {
-    const element = document.getElementById('embed-iframe') as Element
-    const options = {
-        width: props.width,
-        height: props.height,
-        uri: props.url,
-    }
-    const callback = (EmbedController: EmbedController) => {
-        (document.getElementById('seek-handler') as Element).addEventListener('seek',()=>{
-            EmbedController.seek(timeNow.value)
-        })
-    };
-    iframeAPI.value.createController(element, options, callback)
-})
+  const element = document.getElementById("embed-iframe") as Element;
+  const options = {
+    width: props.width,
+    height: props.height,
+    uri: props.url,
+  };
+  const callback = (EmbedController: EmbedController) => {
+    (document.getElementById("seek-handler") as Element).addEventListener(
+      "seek",
+      () => {
+        EmbedController.seek(timeNow.value);
+      },
+    );
+  };
+  iframeAPI.value.createController(element, options, callback);
+});
 
-
-const seek = new Event('seek')
+const seek = new Event("seek");
 const seekTo = (timeToSeek: number) => {
-    timeNow.value = timeToSeek
-    const element = document.getElementById('seek-handler') as Element
-    element.dispatchEvent(seek)
-}
+  timeNow.value = timeToSeek;
+  const element = document.getElementById("seek-handler") as Element;
+  element.dispatchEvent(seek);
+};
 
 defineExpose({
-   seekTo
-})
+  seekTo,
+});
 </script>

@@ -14,11 +14,13 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "@/*": [
-       "src/*"
-      ]
-     },
-     "types": ["vite-plugin-vue-layouts/client","unplugin-vue-router/client","node"]
+      "@/*": ["src/*"]
+    },
+    "types": [
+      "vite-plugin-vue-layouts/client",
+      "unplugin-vue-router/client",
+      "node"
+    ]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }],
