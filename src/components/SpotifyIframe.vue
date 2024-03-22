@@ -26,7 +26,7 @@ onMounted(() => {
     uri: props.url,
   }
   const callback = (EmbedController: EmbedController) => {
-    ;(document.getElementById("seek-handler") as Element).addEventListener(
+    (document.getElementById("seek-handler") as Element).addEventListener(
       "seek",
       () => {
         EmbedController.seek(timeNow.value)
